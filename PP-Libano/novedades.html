@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novedades — Escuela Técnica N°4 D.E. 5 "República del Líbano"</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="#">📞 011 5006-0000</a>
+    <a href="#">✉ secretaria@escuela.edu.ar</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="logo">
+    <div class="logo-icon">EC</div>
+    <div class="logo-text">
+      <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
+      <span>Administración de Empresas</span>
+    </div>
+  </a>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="novedades.html" class="active">Novedades</a>
+    <a href="institucional.html">Institucional</a>
+    <a href="#publicar" class="nav-cta">+ Publicar</a>
+  </nav>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="novedades.html" class="active">Novedades</a>
+  <a href="institucional.html">Institucional</a>
+  <a href="#publicar">+ Publicar novedad</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-pattern"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-label">Noticias institucionales</div>
+    <h1>Novedades <em>de la Escuela</em></h1>
+    <p>Enterate de todo lo que pasa: eventos, inscripciones, logros académicos, actividades y mucho más.</p>
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span>/</span>
+      <span style="color:rgba(255,255,255,0.55)">Novedades</span>
+    </div>
+  </div>
+</div>
+
+<!-- NOVEDADES LIST -->
+<section style="background:var(--white)">
+  <div class="section-header reveal">
+    <div class="section-header-text">
+      <div class="section-label">Todas las noticias</div>
+      <h2 class="section-title">Novedades</h2>
+    </div>
+    <a href="#publicar" class="btn btn-primary">+ Nueva novedad</a>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filter-bar reveal" id="filterBar">
+    <button class="filter-chip active" data-cat="all">Todas</button>
+    <button class="filter-chip" data-cat="Inscripciones">Inscripciones</button>
+    <button class="filter-chip" data-cat="Académico">Académico</button>
+    <button class="filter-chip" data-cat="Eventos">Eventos</button>
+    <button class="filter-chip" data-cat="Logros">Logros</button>
+    <button class="filter-chip" data-cat="Calendario">Calendario</button>
+    <button class="filter-chip" data-cat="Institucional">Institucional</button>
+    <button class="filter-chip" data-cat="Cultura">Cultura</button>
+    <button class="filter-chip" data-cat="Deportes">Deportes</button>
+  </div>
+
+  <div class="news-grid" id="newsGrid"></div>
+
+  <div id="paginationBar" style="display:flex;justify-content:center;gap:10px;margin-top:44px"></div>
+</section>
+
+<!-- PUBLICAR FORM -->
+<section id="publicar" style="background:var(--g100)">
+  <div class="form-wrapper reveal">
+    <h2>Publicar Novedad</h2>
+    <p class="form-subtitle">Completá el formulario para agregar una nueva noticia o novedad institucional al sitio.</p>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Título *</label>
+        <input type="text" id="newsTitle" placeholder="Ej: Inscripción 2025 abierta" maxlength="100">
+      </div>
+      <div class="form-group">
+        <label>Categoría *</label>
+        <select id="newsCategory">
+          <option value="">Seleccioná una categoría</option>
+          <option value="Institucional">Institucional</option>
+          <option value="Académico">Académico</option>
+          <option value="Eventos">Eventos</option>
+          <option value="Inscripciones">Inscripciones</option>
+          <option value="Logros">Logros</option>
+          <option value="Calendario">Calendario</option>
+          <option value="Deportes">Deportes</option>
+          <option value="Cultura">Cultura</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Autor / Área</label>
+        <input type="text" id="newsAuthor" placeholder="Ej: Secretaría Académica">
+      </div>
+      <div class="form-group">
+        <label>Emoji representativo</label>
+        <input type="text" id="newsEmoji" placeholder="Ej: 📢" maxlength="4">
+      </div>
+      <div class="form-group full">
+        <label>Descripción corta *</label>
+        <input type="text" id="newsExcerpt" placeholder="Resumen breve visible en la tarjeta (máx. 160 caracteres)" maxlength="160">
+      </div>
+      <div class="form-group full">
+        <label>Contenido completo</label>
+        <textarea id="newsContent" placeholder="Escribí aquí el contenido completo de la novedad..."></textarea>
+      </div>
+      <div class="form-group full">
+        <label>Imagen (URL opcional)</label>
+        <input type="text" id="newsImage" placeholder="https://ejemplo.com/imagen.jpg">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="clearForm()">Cancelar</button>
+      <button class="btn btn-primary" onclick="publishAndRefresh()">✓ Publicar novedad</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">EC</div>
+        <div class="logo-text"><strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong><span>Administración de Empresas</span></div>
+      </div>
+      <p class="footer-desc">Formando profesionales íntegros con una sólida base en administración, finanzas y gestión empresarial desde 1965.</p>
+      <div class="footer-social">
+        <a href="#">FB</a><a href="#">IG</a><a href="#">TW</a><a href="#">YT</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Institución</h4>
+      <a href="institucional.html#historia">Historia</a>
+      <a href="institucional.html#autoridades">Autoridades</a>
+      <a href="institucional.html#proyecto">Proyecto educativo</a>
+    </div>
+    <div class="footer-col">
+      <h4>Académico</h4>
+      <a href="institucional.html#especialidad">Especialidad</a>
+      <a href="institucional.html#calendario">Calendario</a>
+      <a href="institucional.html#inscripciones">Inscripciones</a>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <a href="institucional.html#cooperadora">Cooperadora</a>
+      <a href="institucional.html#biblioteca">Biblioteca</a>
+      <a href="institucional.html#contacto">Contacto</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Escuela Técnica N°4 D.E. 5 "República del Líbano" — Todos los derechos reservados</span>
+    <span>LUCAS_TUKU · CABA</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-tag" id="modalCat"></div>
+    <h2 id="modalTitle"></h2>
+    <div class="modal-meta" id="modalMeta"></div>
+    <div class="modal-img" id="modalImg"></div>
+    <p class="modal-body" id="modalBody"></p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button id="scrollTop" aria-label="Volver arriba">↑</button>
+
+<script src="main.js"></script>
+<script>
+const PER_PAGE = 6;
+let currentCat  = 'all';
+let currentPage = 1;
+
+function getFiltered() {
+  const list = getNewsList();
+  return currentCat === 'all' ? list : list.filter(n => n.category === currentCat);
+}
+
+function renderNews() {
+  const filtered = getFiltered();
+  const grid = document.getElementById('newsGrid');
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const page = filtered.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
+
+  if (!page.length) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📰</div><p>No hay novedades en esta categoría todavía.<br><a href="#publicar" style="color:var(--g600);font-weight:600">¡Sé el primero en publicar!</a></p></div>`;
+  } else {
+    grid.innerHTML = page.map((n, i) => `
+      <div class="news-card reveal" style="transition-delay:${i*0.07}s" onclick='openNewsModal(${JSON.stringify(n)})'>
+        <div class="news-card-img">
+          ${n.image ? `<img src="${n.image}" alt="${n.title}" onerror="this.style.display='none'">` : ''}
+          <span class="ph-emoji">${n.emoji || '📰'}</span>
+          <span class="news-card-tag">${n.category}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;flex:1">
+          <div class="news-card-body">
+            <div class="news-meta">
+              <span class="news-date">📅 ${n.date}</span>
+              ${n.author ? `<span class="news-author">${n.author}</span>` : ''}
+            </div>
+            <h3>${n.title}</h3>
+            <p>${n.excerpt}</p>
+          </div>
+          <div class="news-card-footer"><span class="news-link">Leer más →</span></div>
+        </div>
+      </div>
+    `).join('');
+  }
+  // pagination
+  const bar = document.getElementById('paginationBar');
+  if (totalPages > 1) {
+    bar.innerHTML = Array.from({length: totalPages}, (_, i) => `
+      <button onclick="goPage(${i+1})" class="btn ${currentPage===i+1?'btn-primary btn-sm':'btn-ghost btn-sm'}">${i+1}</button>
+    `).join('');
+  } else { bar.innerHTML = ''; }
+
+  initReveal();
+}
+
+function goPage(p) {
+  currentPage = p;
+  renderNews();
+  document.querySelector('section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function openNewsModal(n) {
+  if (typeof n === 'string') n = JSON.parse(n);
+  document.getElementById('modalCat').textContent   = n.category;
+  document.getElementById('modalTitle').textContent = n.title;
+  document.getElementById('modalMeta').textContent  = `${n.date}${n.author ? ' · '+n.author : ''}`;
+  const imgEl = document.getElementById('modalImg');
+  imgEl.innerHTML = n.image
+    ? `<img src="${n.image}" style="width:100%;height:200px;object-fit:cover;border-radius:12px" onerror="this.parentElement.innerHTML='<span style=font-size:3.5rem>${n.emoji||'📰'}</span>'">`
+    : `<span style="font-size:3.5rem">${n.emoji||'📰'}</span>`;
+  document.getElementById('modalBody').textContent = n.content || n.excerpt;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// filter chips
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    currentCat  = chip.dataset.cat;
+    currentPage = 1;
+    renderNews();
+  });
+});
+
+function publishAndRefresh() {
+  publishNews();
+  currentPage = 1;
+  currentCat  = 'all';
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('.filter-chip[data-cat="all"]').classList.add('active');
+}
+
+// anchor to #publicar
+if (window.location.hash === '#publicar') {
+  window.addEventListener('load', () => setTimeout(() => document.getElementById('publicar')?.scrollIntoView({ behavior: 'smooth' }), 300));
+}
+
+document.addEventListener('DOMContentLoaded', renderNews);
+</script>
+</body>
+</html>
