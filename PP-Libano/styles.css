@@ -574,3 +574,14 @@ footer {
   margin-top: 200px;
 
 }
+
+
+.title-link {
+  color: #333333; 
+  text-decoration: none;
+  transition: color 0.3s ease; 
+}
+
+.title-link:hover {
+  color: #2e7d32; 
+}
