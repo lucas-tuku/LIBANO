@@ -1,4 +1,3 @@
-
 const DEFAULT_NEWS = [
   {
     id: 1,
@@ -38,7 +37,7 @@ const DEFAULT_NEWS = [
   },
   {
     id: 4,
-    title: "Alumnos de 5° año presentaron proyectos empresariales",
+    title: "Alumnos de 5° año depararon proyectos empresariales",
     category: "Logros",
     author: "Coordinación Técnica",
     date: "10 nov 2024",
@@ -92,7 +91,6 @@ function initHamburger() {
   btn.addEventListener('click', () => nav.classList.toggle('open'));
 }
 
-
 function initReveal() {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -109,7 +107,6 @@ function initScrollTop() {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-
 function showToast(msg = '✅ Novedad publicada con éxito') {
   const t = document.getElementById('toast');
   if (!t) return;
@@ -117,7 +114,6 @@ function showToast(msg = '✅ Novedad publicada con éxito') {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3400);
 }
-
 
 function openModal(newsItem) {
   const overlay = document.getElementById('modalOverlay');
@@ -153,7 +149,6 @@ function initAccordions() {
     trigger.addEventListener('click', () => {
       const body  = trigger.nextElementSibling;
       const isOpen = trigger.classList.contains('open');
-      // close siblings
       trigger.closest('.accordion')?.querySelectorAll('.accordion-trigger').forEach(t => {
         t.classList.remove('open');
         t.nextElementSibling?.classList.remove('open');
@@ -165,7 +160,6 @@ function initAccordions() {
     });
   });
 }
-
 
 function publishNews() {
   const title    = document.getElementById('newsTitle')?.value.trim();
@@ -205,10 +199,76 @@ function clearForm() {
   });
 }
 
+// ── COMPORTAMIENTO INTERACTIVO DEL LOGIN ──
+function initLogin() {
+  const loginForm = document.getElementById('loginForm');
+  const btnLogin = document.getElementById('btnLogin');
+  const forgotPasswordLink = document.getElementById('forgotPassword');
+
+  if (forgotPasswordLink) {
+    forgotPasswordLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('ℹ️ Contactar a soporte o secretaría para restablecer la contraseña.');
+    });
+  }
+
+  if (loginForm && btnLogin) {
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+
+      btnLogin.innerHTML = 'Verificando credenciales...';
+      btnLogin.style.opacity = '0.7';
+      btnLogin.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        if (user && pass) {
+          // 🌟 NUEVO: Guardamos el estado de la sesión en el navegador
+          localStorage.setItem('sesion_activa', 'true');
+          
+          showToast('✅ ¡Ingreso exitoso! Redireccionando...');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1500);
+        } else {
+          showToast('❌ Por favor, ingresa tus datos.');
+          btnLogin.innerHTML = 'Ingresar al sistema →';
+          btnLogin.style.opacity = '1';
+          btnLogin.style.pointerEvents = 'all';
+        }
+      }, 1200);
+    });
+  }
+}
+
+
+function verificarSesion() {
+  const sesionActiva = localStorage.getItem('sesion_activa');
+  
+  if (sesionActiva === 'true') {
+    // Buscamos el botón "Ingresar" en el menú normal y en el menú móvil
+    const btnIngresarNav = document.querySelector('nav .nav-cta');
+    const btnIngresarMobile = document.querySelector('.mobile-nav a[href="login.html"]');
+    
+    // Si existen en la página actual, los removemos por completo de la vista
+    if (btnIngresarNav) {
+      btnIngresarNav.remove();
+    }
+    if (btnIngresarMobile) {
+      btnIngresarMobile.remove();
+    }
+  }
+}
+
+// ── INICIALIZACIÓN ÚNICA DEL DOM ──
 document.addEventListener('DOMContentLoaded', () => {
   initHamburger();
   initReveal();
   initScrollTop();
   initModal();
   initAccordions();
+  initLogin();
+  verificarSesion(); // 🌟 Se ejecuta en todas las páginas al cargar
 });

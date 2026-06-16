@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingreso al Portal — Escuela Técnica N°4 D.E. 5 "República del Líbano"</title>
+  <!-- Estilos globales de la escuela -->
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="#">📞 11 4307-6051</a>
+      <a href="#">✉ det_4_de5@bue.edu.ar</a>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">EC</div>
+      <div class="logo-text">
+        <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
+        <span>Gestión y Administración de las Organizaciones</span>
+      </div>
+    </a>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="novedades.html">Novedades</a>
+      <a href="institucional.html">Institucional</a>
+      <a href="login.html" class="active nav-cta">Ingresar</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Inicio</a>
+    <a href="novedades.html">Novedades</a>
+    <a href="institucional.html">Institucional</a>
+    <a href="login.html" class="active">Ingresar</a>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL DE LOGIN -->
+  <main class="login-section">
+    <div class="login-container">
+      <div class="login-header">
+        <div class="logo-icon">EC</div>
+        <h2>Portal Escolar</h2>
+        <p>Ingresá con tus credenciales institucionales</p>
+      </div>
+
+      <!-- Formulario sin JS intrusivo en las etiquetas -->
+      <form id="loginForm">
+        <div class="form-group-login">
+          <label for="username">Usuario o Email</label>
+          <input type="text" id="username" placeholder="ejemplo@bue.edu.ar" required autocomplete="username">
+        </div>
+
+        <div class="form-group-login">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+
+        <div class="login-options">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe"> Recordarme
+          </label>
+          <a href="#" id="forgotPassword" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" id="btnLogin" class="btn-login">
+          Ingresar al sistema →
+        </button>
+      </form>
+
+      <div class="login-footer">
+        ¿Sos alumno ingresante? <a href="institucional.html#inscripciones">Inscripciones aquí</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon">EC</div>
+          <div class="logo-text">
+            <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
+            <span>Gestión y Administración de las Organizaciones</span>
+          </div>
+        </div>
+        <p class="footer-desc">Formando Técnicos en Gestión y Administración de las organizaciones profesionales desde 1965.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Escuela Técnica N°4 D.E. 5 "República del Líbano" — Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts funcionales -->
+  <script src="main.js"></script>
+
+</body>
+</html>
