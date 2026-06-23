@@ -4,57 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ingreso al Portal — Escuela Técnica N°4 D.E. 5 "República del Líbano"</title>
-  <!-- Estilos globales de la escuela -->
+  <meta name="description" content="Acceso seguro al portal administrativo de la Escuela Técnica Líbano.">
   <link rel="stylesheet" href="styles.css">
-
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="topbar-left">
-      <a href="#">📞 11 4307-6051</a>
-      <a href="#">✉ det_4_de5@bue.edu.ar</a>
-    </div>
-  </div>
-
-  <!-- HEADER -->
-  <header>
-    <a href="index.html" class="logo">
-      <div class="logo-icon">EC</div>
-      <div class="logo-text">
-        <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
-        <span>Gestión y Administración de las Organizaciones</span>
-      </div>
-    </a>
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="novedades.html">Novedades</a>
-      <a href="institucional.html">Institucional</a>
-      <a href="login.html" class="active nav-cta">Ingresar</a>
-    </nav>
-    <button class="hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
-  </header>
-
-  <div class="mobile-nav" id="mobileNav">
-    <a href="index.html">Inicio</a>
-    <a href="novedades.html">Novedades</a>
-    <a href="institucional.html">Institucional</a>
-    <a href="login.html" class="active">Ingresar</a>
-  </div>
+  <!-- Marcadores para inyección de componentes comunes -->
+  <div id="topbar-placeholder"></div>
+  <div id="header-placeholder"></div>
 
   <!-- CONTENEDOR PRINCIPAL DE LOGIN -->
-  <main class="login-section">
-    <div class="login-container">
+  <main class="login-section" id="loginMainSection">
+    <div class="login-container" id="loginCard">
       <div class="login-header">
         <div class="logo-icon">EC</div>
         <h2>Portal Escolar</h2>
         <p>Ingresá con tus credenciales institucionales</p>
       </div>
 
-      <!-- Formulario sin JS intrusivo en las etiquetas -->
       <form id="loginForm">
         <div class="form-group-login">
           <label for="username">Usuario o Email</label>
@@ -66,17 +35,14 @@
           <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
         </div>
 
-        <div class="login-options">
-          <label class="remember-me">
-            <input type="checkbox" id="rememberMe"> Recordarme
-          </label>
-          <a href="#" id="forgotPassword" class="forgot-password">¿Olvidaste tu contraseña?</a>
-        </div>
-
         <button type="submit" id="btnLogin" class="btn-login">
           Ingresar al sistema →
         </button>
       </form>
+
+      <div class="login-info-box" style="margin-top:20px; font-size:0.8rem; color:var(--text-soft); line-height: 1.5;" id="loginInfoBox">
+        <p><strong>Modo de prueba local:</strong> usa las credenciales <strong>admin</strong> / <strong>admin123</strong>.</p>
+      </div>
 
       <div class="login-footer">
         ¿Sos alumno ingresante? <a href="institucional.html#inscripciones">Inscripciones aquí</a>
@@ -84,29 +50,55 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">
-          <div class="logo-icon">EC</div>
-          <div class="logo-text">
-            <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
-            <span>Gestión y Administración de las Organizaciones</span>
-          </div>
-        </div>
-        <p class="footer-desc">Formando Técnicos en Gestión y Administración de las organizaciones profesionales desde 1965.</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Escuela Técnica N°4 D.E. 5 "República del Líbano" — Todos los derechos reservados</span>
-    </div>
-  </footer>
-
+  <!-- Marcadores para footer y modal -->
+  <div id="footer-placeholder"></div>
+  <div id="modal-placeholder"></div>
   <div class="toast" id="toast"></div>
 
   <!-- Scripts funcionales -->
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="layout.js"></script>
   <script src="main.js"></script>
 
+  <script>
+    // Lógica asíncrona de autenticación unificada
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      const btnLogin = document.getElementById('btnLogin');
+
+      // Si ya está logueado, redirigir al inicio
+      setTimeout(async () => {
+        if (await window.db.isLoggedIn()) {
+          window.location.href = 'index.html';
+        }
+      }, 100);
+
+      if (loginForm && btnLogin) {
+        loginForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const user = document.getElementById('username').value.trim();
+          const pass = document.getElementById('password').value;
+
+          btnLogin.innerHTML = 'Verificando credenciales...';
+          btnLogin.style.opacity = '0.7';
+          btnLogin.style.pointerEvents = 'none';
+
+          try {
+            await window.db.login(user, pass);
+            showToast('✅ ¡Ingreso exitoso! Redireccionando...');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1500);
+          } catch (err) {
+            showToast('❌ Error: ' + err.message);
+            btnLogin.innerHTML = 'Ingresar al sistema →';
+            btnLogin.style.opacity = '1';
+            btnLogin.style.pointerEvents = 'all';
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

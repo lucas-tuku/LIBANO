@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Auditoría — Escuela Técnica N°4 "República del Líbano"</title>
+  <meta name="description" content="Historial completo de modificaciones del sitio web. Acceso restringido a directivos autorizados.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Marcadores para inyección de componentes comunes -->
+  <div id="topbar-placeholder"></div>
+  <div id="header-placeholder"></div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero" id="logsHero">
+    <div class="page-hero-pattern"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label" style="background: rgba(240,192,64,0.15); border-color: var(--accent); color: var(--accent);">🛠️ Panel de Control</div>
+      <h1>Registro <em>de Cambios</em></h1>
+      <p>Auditoría en tiempo real de todas las publicaciones, modificaciones y eliminación de datos escolares.</p>
+      <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span>/</span>
+        <span style="color:rgba(255,255,255,0.55)">Historial de Cambios</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIT LOGS SECTION -->
+  <main class="logs-section" id="logsContent">
+    <div class="admin-section-header" style="border-bottom: 1px solid var(--g200); margin-bottom:32px;">
+      <h3>Historial de Operaciones</h3>
+      <div>
+        <button class="btn btn-outline" style="border-color:#eb5757; color:#eb5757; margin-right: 8px;" id="btnClearLogs">🗑️ Vaciar Historial</button>
+        <a href="index.html" class="btn btn-secondary">← Volver al Inicio</a>
+      </div>
+    </div>
+
+    <div id="logsTableContainer"></div>
+  </main>
+
+  <!-- Marcadores para footer y modal -->
+  <div id="footer-placeholder"></div>
+  <div id="modal-placeholder"></div>
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts funcionales -->
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="layout.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    // Proteger la ruta client-side y renderizar logs
+    async function initLogsPage() {
+      // 1. Proteger ruta
+      const loggedIn = await window.db.isLoggedIn();
+      if (!loggedIn) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // 2. Renderizar tabla de logs
+      try {
+        const list = await window.db.getLogs();
+        const container = document.getElementById('logsTableContainer');
+        if (!container) return;
+
+        if (!list.length) {
+          container.innerHTML = `
+            <div class="empty-state" style="padding: 60px 0;">
+              <div class="empty-icon">📁</div>
+              <p>No hay registros de cambios disponibles en el sistema.</p>
+            </div>
+          `;
+          return;
+        }
+
+        const rowsHtml = list.map(log => {
+          let badgeClass = 'badge-sesion';
+          const action = log.action.toUpperCase();
+          if (action.includes('CREAR') || action.includes('ADD') || action.includes('AGREGAR')) {
+            badgeClass = 'badge-crear';
+          } else if (action.includes('EDITAR') || action.includes('MODIFICAR')) {
+            badgeClass = 'badge-editar';
+          } else if (action.includes('ELIMINAR') || action.includes('BORRAR') || action.includes('FALLIDO')) {
+            badgeClass = 'badge-eliminar';
+          }
+
+          return `
+            <tr>
+              <td style="white-space: nowrap; font-weight: 600; color: var(--text-dark);">${log.date}</td>
+              <td>
+                <span class="news-author" style="background: var(--g50); color: var(--g800); border: 1px solid var(--g200); font-size:0.75rem;">
+                  👤 ${log.user}
+                </span>
+              </td>
+              <td>
+                <span class="log-action-badge ${badgeClass}">
+                  ${log.action}
+                </span>
+              </td>
+              <td style="color: var(--text-mid); line-height: 1.5; font-size:0.85rem;">${log.description}</td>
+            </tr>
+          `;
+        }).join('');
+
+        container.innerHTML = `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha y Hora</th>
+                  <th>Usuario</th>
+                  <th>Acción</th>
+                  <th>Descripción del Cambio</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rowsHtml}
+              </tbody>
+            </table>
+          </div>
+        `;
+      } catch (err) {
+        console.error("Error cargando auditoría", err);
+      }
+    }
+
+    // Limpiar historial de cambios
+    document.getElementById('btnClearLogs').addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (confirm('¿Estás seguro de que deseas vaciar el historial de auditoría? Esta acción dejará constancia en un nuevo log.')) {
+        try {
+          await window.db.clearLogs();
+          showToast('✅ Historial de auditoría vaciado correctamente.');
+          initLogsPage();
+        } catch (err) {
+          showToast('❌ Error al vaciar historial.');
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initLogsPage, 150);
+    });
+  </script>
+</body>
+</html>

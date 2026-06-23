@@ -1,295 +1,322 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Novedades — Escuela Técnica N°4 D.E. 5 "República del Líbano"</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novedades — Escuela Técnica N°4 D.E. 5 "República del Líbano"</title>
+  <meta name="description" content="Novedades institucionales, eventos, logros académicos e inscripciones de la Escuela Técnica Líbano.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-left">
-    <a href="#">📞 11 4307-6051</a>
-    <a href="#">✉ det_4_de5@bue.edu.ar</a>
-  </div>
-</div>
+  <!-- Marcadores para inyección de componentes comunes -->
+  <div id="topbar-placeholder"></div>
+  <div id="header-placeholder"></div>
 
-<!-- HEADER -->
-<header>
-  <a href="index.html" class="logo">
-    <div class="logo-icon">EC</div>
-    <div class="logo-text">
-      <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
-      <span>Administración de Empresas</span>
-    </div>
-  </a>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="novedades.html" class="active">Novedades</a>
-    <a href="institucional.html">Institucional</a>
-    <a href="login.html" class="nav-cta">Ingresar</a>
-    <a href="#publicar" class="nav-cta">+ Publicar</a>
-  </nav>
-  <button class="hamburger" id="hamburger" aria-label="Menú">
-    <span></span><span></span><span></span>
-  </button>
-</header>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html">Inicio</a>
-  <a href="novedades.html" class="active">Novedades</a>
-  <a href="institucional.html">Institucional</a>
-  <a href="login.html" class="nav-cta">Ingresar</a>
-  <a href="#publicar">+ Publicar novedad</a>
-</div>
-
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="page-hero-pattern"></div>
-  <div class="page-hero-content">
-    <div class="page-hero-label">Noticias institucionales</div>
-    <h1>Novedades <em>de la Escuela</em></h1>
-    <p>Enterate de todo lo que pasa: eventos, inscripciones, logros académicos, actividades y mucho más.</p>
-    <div class="breadcrumb">
-      <a href="index.html">Inicio</a>
-      <span>/</span>
-      <span style="color:rgba(255,255,255,0.55)">Novedades</span>
+  <!-- PAGE HERO -->
+  <div class="page-hero" id="novedadesHero">
+    <div class="page-hero-pattern"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label">Noticias institucionales</div>
+      <h1>Novedades <em>de la Escuela</em></h1>
+      <p>Enterate de todo lo que pasa: eventos, inscripciones, logros académicos, actividades y mucho más.</p>
+      <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span>/</span>
+        <span style="color:rgba(255,255,255,0.55)">Novedades</span>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- NOVEDADES LIST -->
-<section style="background:var(--white)">
-  <div class="section-header reveal">
-    <div class="section-header-text">
-      <div class="section-label">Todas las noticias</div>
-      <h2 class="section-title">Novedades</h2>
+  <!-- NOVEDADES LIST -->
+  <section style="background:var(--white)" id="noticiasSection">
+    <div class="section-header reveal">
+      <div class="section-header-text">
+        <div class="section-label">Todas las noticias</div>
+        <h2 class="section-title">Novedades</h2>
+      </div>
+      <button class="btn btn-primary" id="btnNuevaNovedad" style="display:none;" onclick="scrollToForm()">+ Nueva novedad</button>
     </div>
-    <a href="#publicar" class="btn btn-primary">+ Nueva novedad</a>
-  </div>
 
-  <!-- FILTERS -->
-  <div class="filter-bar reveal" id="filterBar">
-    <button class="filter-chip active" data-cat="all">Todas</button>
-    <button class="filter-chip" data-cat="Inscripciones">Inscripciones</button>
-    <button class="filter-chip" data-cat="Académico">Académico</button>
-    <button class="filter-chip" data-cat="Eventos">Eventos</button>
-    <button class="filter-chip" data-cat="Logros">Logros</button>
-    <button class="filter-chip" data-cat="Calendario">Calendario</button>
-    <button class="filter-chip" data-cat="Institucional">Institucional</button>
-    <button class="filter-chip" data-cat="Cultura">Cultura</button>
-    <button class="filter-chip" data-cat="Deportes">Deportes</button>
-  </div>
-
-  <div class="news-grid" id="newsGrid"></div>
-
-  <div id="paginationBar" style="display:flex;justify-content:center;gap:10px;margin-top:44px"></div>
-</section>
-
-<!-- PUBLICAR FORM -->
-<section id="publicar" style="background:var(--g100)">
-  <div class="form-wrapper reveal">
-    <h2>Publicar Novedad</h2>
-    <p class="form-subtitle">Completá el formulario para agregar una nueva noticia o novedad institucional al sitio.</p>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Título *</label>
-        <input type="text" id="newsTitle" placeholder="Ej: Inscripción 2025 abierta" maxlength="100">
-      </div>
-      <div class="form-group">
-        <label>Categoría *</label>
-        <select id="newsCategory">
-          <option value="">Seleccioná una categoría</option>
-          <option value="Institucional">Institucional</option>
-          <option value="Académico">Académico</option>
-          <option value="Eventos">Eventos</option>
-          <option value="Inscripciones">Inscripciones</option>
-          <option value="Logros">Logros</option>
-          <option value="Calendario">Calendario</option>
-          <option value="Deportes">Deportes</option>
-          <option value="Cultura">Cultura</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Autor / Área</label>
-        <input type="text" id="newsAuthor" placeholder="Ej: Secretaría Académica">
-      </div>
-      <div class="form-group">
-        <label>Emoji representativo</label>
-        <input type="text" id="newsEmoji" placeholder="Ej: 📢" maxlength="4">
-      </div>
-      <div class="form-group full">
-        <label>Descripción corta *</label>
-        <input type="text" id="newsExcerpt" placeholder="Resumen breve visible en la tarjeta (máx. 160 caracteres)" maxlength="160">
-      </div>
-      <div class="form-group full">
-        <label>Contenido completo</label>
-        <textarea id="newsContent" placeholder="Escribí aquí el contenido completo de la novedad..."></textarea>
-      </div>
-      <div class="form-group full">
-        <label>Imagen (URL opcional)</label>
-        <input type="text" id="newsImage" placeholder="https://ejemplo.com/imagen.jpg">
-      </div>
+    <!-- FILTERS -->
+    <div class="filter-bar reveal" id="filterBar">
+      <button class="filter-chip active" data-cat="all">Todas</button>
+      <button class="filter-chip" data-cat="Inscripciones">Inscripciones</button>
+      <button class="filter-chip" data-cat="Académico">Académico</button>
+      <button class="filter-chip" data-cat="Eventos">Eventos</button>
+      <button class="filter-chip" data-cat="Logros">Logros</button>
+      <button class="filter-chip" data-cat="Calendario">Calendario</button>
+      <button class="filter-chip" data-cat="Institucional">Institucional</button>
+      <button class="filter-chip" data-cat="Cultura">Cultura</button>
+      <button class="filter-chip" data-cat="Deportes">Deportes</button>
     </div>
-    <div class="form-actions">
-      <button class="btn btn-ghost" onclick="clearForm()">Cancelar</button>
-      <button class="btn btn-primary" onclick="publishAndRefresh()">✓ Publicar novedad</button>
-    </div>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">
-          <div class="logo-icon">EC</div>
-          <div class="logo-text"><strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong><span>Gestion y Administración de las Organizaciones</span></div>
-        </div>
-        <p class="footer-desc">Formando Tecnicos en Gestion y Administración de las organizaciones profesionales desde 1965.</p>
-        <div class="footer-social">
-          <a href="#">FB</a><a href="#">IG</a><a href="#">TW</a><a href="#">YT</a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Institución</h4>
-        <a href="#historia">Historia</a>
-        <a href="#autoridades">Autoridades</a>
-        <a href="#proyecto">Proyecto educativo</a>
-        <a href="#reglamento">Normas de Convivencia</a>
-      </div>
-      <div class="footer-col">
-        <h4>Académico</h4>
-        <a href="#especialidad">Especialidad</a>
-        <a href="#calendario">Calendario</a>
-        <a href="#inscripciones">Inscripciones</a>
-        <a href="#examenes">Exámenes</a>
-      </div>
-      <div class="footer-col">
-        <h4>Servicios</h4>
-        <a href="#biblioteca">Biblioteca</a>
-        <a href="#acompanamiento">Acompañamiento</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2025 Escuela Técnica N°4 D.E. 5 "República del Líbano" — Todos los derechos reservados</span>
+    <div class="news-grid" id="newsGrid"></div>
+
+    <div id="paginationBar" style="display:flex;justify-content:center;gap:10px;margin-top:44px"></div>
+  </section>
+
+  <!-- PUBLICAR FORM (EXCLUSIVO ADMINISTRADOR) -->
+  <section id="publicar" style="background:var(--g100); display:none;">
+    <div class="form-wrapper reveal">
+      <h2 id="formTitle">Publicar Novedad</h2>
+      <p class="form-subtitle" id="formSubtitle">Completá el formulario para agregar una nueva noticia o novedad institucional al sitio.</p>
       
-    </div>
-  </footer>
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-tag" id="modalCat"></div>
-    <h2 id="modalTitle"></h2>
-    <div class="modal-meta" id="modalMeta"></div>
-    <div class="modal-img" id="modalImg"></div>
-    <p class="modal-body" id="modalBody"></p>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-<button id="scrollTop" aria-label="Volver arriba">↑</button>
-
-<script src="main.js"></script>
-<script>
-const PER_PAGE = 6;
-let currentCat  = 'all';
-let currentPage = 1;
-
-function getFiltered() {
-  const list = getNewsList();
-  return currentCat === 'all' ? list : list.filter(n => n.category === currentCat);
-}
-
-function renderNews() {
-  const filtered = getFiltered();
-  const grid = document.getElementById('newsGrid');
-  const totalPages = Math.ceil(filtered.length / PER_PAGE);
-  const page = filtered.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
-
-  if (!page.length) {
-    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📰</div><p>No hay novedades en esta categoría todavía.<br><a href="#publicar" style="color:var(--g600);font-weight:600">¡Sé el primero en publicar!</a></p></div>`;
-  } else {
-    grid.innerHTML = page.map((n, i) => `
-      <div class="news-card reveal" style="transition-delay:${i*0.07}s" onclick='openNewsModal(${JSON.stringify(n)})'>
-        <div class="news-card-img">
-          ${n.image ? `<img src="${n.image}" alt="${n.title}" onerror="this.style.display='none'">` : ''}
-          <span class="ph-emoji">${n.emoji || '📰'}</span>
-          <span class="news-card-tag">${n.category}</span>
-        </div>
-        <div style="display:flex;flex-direction:column;flex:1">
-          <div class="news-card-body">
-            <div class="news-meta">
-              <span class="news-date">📅 ${n.date}</span>
-              ${n.author ? `<span class="news-author">${n.author}</span>` : ''}
-            </div>
-            <h3>${n.title}</h3>
-            <p>${n.excerpt}</p>
+      <form id="newsActionForm">
+        <input type="hidden" id="newsId">
+        
+        <div class="form-grid">
+          <div class="form-group-login" style="margin-bottom:12px;">
+            <label>Título *</label>
+            <input type="text" id="newsTitle" placeholder="Ej: Inscripción 2025 abierta" maxlength="100" required>
           </div>
-          <div class="news-card-footer"><span class="news-link">Leer más →</span></div>
+          <div class="form-group-login" style="margin-bottom:12px;">
+            <label>Categoría *</label>
+            <select id="newsCategory" required style="width:100%; padding:12px; border:1px solid var(--g200); border-radius:var(--radius-sm); background:var(--g50);">
+              <option value="">Seleccioná una categoría</option>
+              <option value="Institucional">Institucional</option>
+              <option value="Académico">Académico</option>
+              <option value="Eventos">Eventos</option>
+              <option value="Inscripciones">Inscripciones</option>
+              <option value="Logros">Logros</option>
+              <option value="Calendario">Calendario</option>
+              <option value="Deportes">Deportes</option>
+              <option value="Cultura">Cultura</option>
+            </select>
+          </div>
+          <div class="form-group-login" style="margin-bottom:12px;">
+            <label>Autor / Área</label>
+            <input type="text" id="newsAuthor" placeholder="Ej: Secretaría Académica">
+          </div>
+          <div class="form-group-login" style="margin-bottom:12px;">
+            <label>Emoji representativo</label>
+            <input type="text" id="newsEmoji" placeholder="Ej: 📢" maxlength="4">
+          </div>
+          <div class="form-group-login full" style="grid-column: 1 / -1; margin-bottom:12px;">
+            <label>Descripción corta *</label>
+            <input type="text" id="newsExcerpt" placeholder="Resumen breve visible en la tarjeta (máx. 160 caracteres)" maxlength="160" required>
+          </div>
+          <div class="form-group-login full" style="grid-column: 1 / -1; margin-bottom:12px;">
+            <label>Contenido completo</label>
+            <textarea id="newsContent" placeholder="Escribí aquí el contenido completo de la novedad..." style="width:100%; min-height:120px; padding:12px; border:1px solid var(--g200); border-radius:var(--radius-sm); background:var(--g50); font-family:inherit; resize:vertical;"></textarea>
+          </div>
+          <div class="form-group-login full" style="grid-column: 1 / -1; margin-bottom:12px;">
+            <label>Imagen (URL opcional)</label>
+            <input type="text" id="newsImage" placeholder="https://ejemplo.com/imagen.jpg">
+          </div>
         </div>
-      </div>
-    `).join('');
-  }
-  // pagination
-  const bar = document.getElementById('paginationBar');
-  if (totalPages > 1) {
-    bar.innerHTML = Array.from({length: totalPages}, (_, i) => `
-      <button onclick="goPage(${i+1})" class="btn ${currentPage===i+1?'btn-primary btn-sm':'btn-ghost btn-sm'}">${i+1}</button>
-    `).join('');
-  } else { bar.innerHTML = ''; }
+        <div class="form-actions" style="display:flex; gap:14px; justify-content:flex-end; margin-top:20px;">
+          <button type="button" class="btn btn-ghost" onclick="resetForm()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitNews">✓ Publicar novedad</button>
+        </div>
+      </form>
+    </div>
+  </section>
 
-  initReveal();
-}
+  <!-- Marcadores para footer y modal -->
+  <div id="footer-placeholder"></div>
+  <div id="modal-placeholder"></div>
+  <div class="toast" id="toast"></div>
 
-function goPage(p) {
-  currentPage = p;
-  renderNews();
-  document.querySelector('section').scrollIntoView({ behavior: 'smooth' });
-}
+  <!-- Scripts funcionales -->
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="layout.js"></script>
+  <script src="main.js"></script>
 
-function openNewsModal(n) {
-  if (typeof n === 'string') n = JSON.parse(n);
-  document.getElementById('modalCat').textContent   = n.category;
-  document.getElementById('modalTitle').textContent = n.title;
-  document.getElementById('modalMeta').textContent  = `${n.date}${n.author ? ' · '+n.author : ''}`;
-  const imgEl = document.getElementById('modalImg');
-  imgEl.innerHTML = n.image
-    ? `<img src="${n.image}" style="width:100%;height:200px;object-fit:cover;border-radius:12px" onerror="this.parentElement.innerHTML='<span style=font-size:3.5rem>${n.emoji||'📰'}</span>'">`
-    : `<span style="font-size:3.5rem">${n.emoji||'📰'}</span>`;
-  document.getElementById('modalBody').textContent = n.content || n.excerpt;
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+  <script>
+    const PER_PAGE = 6;
+    let currentCat  = 'all';
+    let currentPage = 1;
+    let loadedNews = [];
 
-// filter chips
-document.querySelectorAll('.filter-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    currentCat  = chip.dataset.cat;
-    currentPage = 1;
-    renderNews();
-  });
-});
+    async function loadNews() {
+      try {
+        loadedNews = await window.db.getNews();
+        const loggedIn = await window.db.isLoggedIn();
 
-function publishAndRefresh() {
-  publishNews();
-  currentPage = 1;
-  currentCat  = 'all';
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  document.querySelector('.filter-chip[data-cat="all"]').classList.add('active');
-}
+        if (loggedIn) {
+          document.getElementById('btnNuevaNovedad').style.display = 'inline-flex';
+          document.getElementById('publicar').style.display = 'block';
+        }
 
-// anchor to #publicar
-if (window.location.hash === '#publicar') {
-  window.addEventListener('load', () => setTimeout(() => document.getElementById('publicar')?.scrollIntoView({ behavior: 'smooth' }), 300));
-}
+        renderNews();
+      } catch (err) {
+        console.error("Error al cargar novedades", err);
+      }
+    }
 
-document.addEventListener('DOMContentLoaded', renderNews);
-</script>
+    function getFiltered() {
+      return currentCat === 'all' ? loadedNews : loadedNews.filter(n => n.category === currentCat);
+    }
+
+    async function renderNews() {
+      const filtered = getFiltered();
+      const grid = document.getElementById('newsGrid');
+      const totalPages = Math.ceil(filtered.length / PER_PAGE);
+      const page = filtered.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
+      const loggedIn = await window.db.isLoggedIn();
+
+      if (!page.length) {
+        grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📰</div><p>No hay novedades en esta categoría todavía. ${loggedIn ? '<br><a href="#publicar" style="color:var(--g600);font-weight:600">¡Sé el primero en publicar!</a>' : ''}</p></div>`;
+      } else {
+        grid.innerHTML = page.map((n, i) => {
+          const dataStr = JSON.stringify(n).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+          return `
+            <div class="news-card reveal" style="transition-delay:${i*0.07}s" id="newsCard_${n.id}">
+              <div class="news-card-img" onclick='openNewsModal(${dataStr})'>
+                ${n.image ? `<img src="${n.image}" alt="${n.title}" onerror="this.style.display='none'">` : ''}
+                <span class="ph-emoji">${n.emoji || '📰'}</span>
+                <span class="news-card-tag">${n.category}</span>
+              </div>
+              
+              ${loggedIn ? `
+                <div class="card-admin-controls">
+                  <button class="edit-btn-inline" title="Editar noticia" onclick='openEditNews(${dataStr})' style="position:static;">✏️</button>
+                  <button class="edit-btn-inline delete" title="Eliminar noticia" style="position:static;" onclick="deleteNewsAction(${n.id})">🗑️</button>
+                </div>
+              ` : ''}
+              
+              <div style="display:flex;flex-direction:column;flex:1" onclick='openNewsModal(${dataStr})'>
+                <div class="news-card-body">
+                  <div class="news-meta">
+                    <span class="news-date">📅 ${n.date}</span>
+                    ${n.author ? `<span class="news-author">${n.author}</span>` : ''}
+                  </div>
+                  <h3>${n.title}</h3>
+                  <p>${n.excerpt}</p>
+                </div>
+                <div class="news-card-footer"><span class="news-link">Leer más →</span></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Paginación
+      const bar = document.getElementById('paginationBar');
+      if (totalPages > 1) {
+        bar.innerHTML = Array.from({length: totalPages}, (_, i) => `
+          <button onclick="goPage(${i+1})" class="btn ${currentPage===i+1?'btn-primary btn-sm':'btn-ghost btn-sm'}">${i+1}</button>
+        `).join('');
+      } else { 
+        bar.innerHTML = ''; 
+      }
+
+      initReveal();
+    }
+
+    function goPage(p) {
+      currentPage = p;
+      renderNews();
+      document.getElementById('noticiasSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function openNewsModal(n) {
+      document.getElementById('modalCat').textContent   = n.category;
+      document.getElementById('modalTitle').textContent = n.title;
+      document.getElementById('modalMeta').textContent  = `${n.date}${n.author ? ' · '+n.author : ''}`;
+      const imgEl = document.getElementById('modalImg');
+      imgEl.innerHTML = n.image
+        ? `<img src="${n.image}" style="width:100%;height:200px;object-fit:cover;border-radius:12px" onerror="this.parentElement.innerHTML='<span style=font-size:3.5rem>${n.emoji||'📰'}</span>'">`
+        : `<span style="font-size:3.5rem">${n.emoji||'📰'}</span>`;
+      document.getElementById('modalBody').textContent = n.content || n.excerpt;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Filtros
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentCat  = chip.dataset.cat;
+        currentPage = 1;
+        renderNews();
+      });
+    });
+
+    // Desplazamiento interactivo al formulario
+    function scrollToForm() {
+      resetForm();
+      document.getElementById('publicar').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Carga de noticia en formulario de edición
+    function openEditNews(n) {
+      document.getElementById('publicar').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('newsId').value = n.id;
+      document.getElementById('newsTitle').value = n.title;
+      document.getElementById('newsCategory').value = n.category;
+      document.getElementById('newsAuthor').value = n.author || '';
+      document.getElementById('newsEmoji').value = n.emoji || '📢';
+      document.getElementById('newsExcerpt').value = n.excerpt;
+      document.getElementById('newsContent').value = n.content || '';
+      document.getElementById('newsImage').value = n.image || '';
+      
+      document.getElementById('formTitle').textContent = 'Editar Novedad';
+      document.getElementById('formSubtitle').textContent = 'Modificá los campos para actualizar la noticia seleccionada.';
+      document.getElementById('btnSubmitNews').textContent = '✓ Guardar cambios';
+    }
+
+    function resetForm() {
+      document.getElementById('newsId').value = '';
+      document.getElementById('newsTitle').value = '';
+      document.getElementById('newsCategory').selectedIndex = 0;
+      document.getElementById('newsAuthor').value = '';
+      document.getElementById('newsEmoji').value = '';
+      document.getElementById('newsExcerpt').value = '';
+      document.getElementById('newsContent').value = '';
+      document.getElementById('newsImage').value = '';
+      
+      document.getElementById('formTitle').textContent = 'Publicar Novedad';
+      document.getElementById('formSubtitle').textContent = 'Completá el formulario para agregar una nueva noticia o novedad institucional al sitio.';
+      document.getElementById('btnSubmitNews').textContent = '✓ Publicar novedad';
+    }
+
+    // Guardar o Actualizar novedad en DB
+    document.getElementById('newsActionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('newsId').value;
+      const item = {
+        title: document.getElementById('newsTitle').value.trim(),
+        category: document.getElementById('newsCategory').value,
+        author: document.getElementById('newsAuthor').value.trim() || 'Secretaría',
+        emoji: document.getElementById('newsEmoji').value.trim() || '📢',
+        excerpt: document.getElementById('newsExcerpt').value.trim(),
+        content: document.getElementById('newsContent').value.trim(),
+        image: document.getElementById('newsImage').value.trim()
+      };
+      if (id) item.id = parseInt(id);
+
+      try {
+        await window.db.saveNews(item);
+        showToast(id ? '✅ Novedad actualizada con éxito.' : '✅ Novedad publicada con éxito.');
+        resetForm();
+        loadNews();
+      } catch (err) {
+        showToast('❌ Error al publicar novedad.');
+      }
+    });
+
+    // Acción de eliminación
+    async function deleteNewsAction(id) {
+      if (confirm('¿Estás seguro de que deseas eliminar esta novedad?')) {
+        try {
+          await window.db.deleteNews(id);
+          showToast('✅ Novedad eliminada.');
+          loadNews();
+        } catch (err) {
+          showToast('❌ Error al eliminar novedad.');
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(loadNews, 100);
+    });
+  </script>
 </body>
 </html>

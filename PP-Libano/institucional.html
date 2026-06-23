@@ -1,893 +1,810 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Institucional — Escuela Técnica N°4 D.E. 5 "República del Líbano"</title>
-<link rel="stylesheet" href="styles.css">
-<style>
-/* ── page-specific styles ── */
-.inst-section { padding: 72px 48px; }
-.inst-section:nth-child(even) { background: var(--g50); }
-.inst-section:nth-child(odd)  { background: var(--white); }
-
-/* Two-col layout */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-.two-col.reverse { direction: rtl; }
-.two-col.reverse > * { direction: ltr; }
-.content-block p { font-size: 0.93rem; color: var(--text-mid); line-height: 1.78; margin-bottom: 16px; }
-.content-block p:last-child { margin-bottom: 0; }
-
-/* highlight box */
-.highlight-box {
-  background: linear-gradient(135deg, var(--g700), var(--g600));
-  border-radius: var(--radius-lg); padding: 36px;
-  color: var(--white);
-}
-.highlight-box h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 14px; }
-.highlight-box p  { color: rgba(255,255,255,0.75); font-size: 0.9rem; line-height: 1.75; margin-bottom: 12px; }
-.highlight-box ul { list-style: none; padding: 0; }
-.highlight-box li { padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.88rem; color: rgba(255,255,255,0.8); display: flex; gap: 8px; align-items: flex-start; }
-.highlight-box li:last-child { border-bottom: none; }
-.highlight-box li::before { content: '✓'; color: var(--g300); font-weight: 700; flex-shrink: 0; }
-
-/* stat row */
-.stat-row { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 28px; }
-.stat-box {
-  flex: 1; min-width: 120px;
-  background: var(--g100); border: 1px solid var(--g200);
-  border-radius: var(--radius); padding: 20px; text-align: center;
-}
-.stat-box strong { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--g700); }
-.stat-box span   { font-size: 0.73rem; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.06em; }
-
-/* materias grid */
-.materias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-.materia-card {
-  background: var(--white); border: 1px solid var(--g200);
-  border-radius: var(--radius); padding: 22px 22px;
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.materia-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
-.materia-year { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--g500); margin-bottom: 6px; }
-.materia-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--g900); margin-bottom: 4px; }
-.materia-card p  { font-size: 0.8rem; color: var(--text-mid); line-height: 1.55; }
-.MIBOMBO {list-style-type: none;}
-
-
-/* autoridades */
-.autoridades-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-.autoridad-card {
-  background: var(--white); border: 1px solid var(--g200);
-  border-radius: var(--radius); padding: 26px 22px; text-align: center;
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.autoridad-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
-.autoridad-avatar {
-  width: 60px; height: 60px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--g600), var(--g400));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem; color: var(--white); margin: 0 auto 12px;
-}
-.autoridad-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--g900); margin-bottom: 4px; }
-.autoridad-card .cargo { font-size: 0.75rem; color: var(--g600); font-weight: 600; background: var(--g100); padding: 3px 10px; border-radius: 20px; display: inline-block; }
-
-/* calendar events */
-.cal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.cal-month {
-  background: var(--white); border: 1px solid var(--g200);
-  border-radius: var(--radius); overflow: hidden;
-}
-.cal-month-header {
-  background: var(--g800); color: var(--white);
-  padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
-}
-.cal-month-header h4 { font-size: 0.9rem; font-weight: 700; color: var(--g300); }
-.cal-month-header span { font-size: 0.72rem; color: rgba(255,255,255,0.4); }
-.cal-event {
-  padding: 13px 20px; border-bottom: 1px solid var(--g100);
-  display: flex; gap: 14px; align-items: flex-start;
-  font-size: 0.85rem;
-}
-.cal-event:last-child { border-bottom: none; }
-.cal-day {
-  min-width: 36px; height: 36px;
-  background: var(--g100); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 0.88rem; color: var(--g700); flex-shrink: 0;
-}
-.cal-day.important { background: var(--g700); color: var(--white); }
-.cal-event-info strong { display: block; color: var(--g900); font-weight: 600; font-size: 0.86rem; margin-bottom: 2px; }
-.cal-event-info span  { color: var(--text-soft); font-size: 0.76rem; }
-
-/* info cards light row */
-.cards-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
-
-/* contact grid */
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.contact-item { display: flex; gap: 16px; align-items: flex-start; }
-.contact-icon {
-  width: 44px; height: 44px; flex-shrink: 0;
-  background: var(--g100); border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-}
-.contact-item h4 { font-size: 0.85rem; font-weight: 700; color: var(--g900); margin-bottom: 4px; }
-.contact-item p  { font-size: 0.83rem; color: var(--text-mid); line-height: 1.6; }
-
-/* sticky side nav */
-.inst-nav {
-  position: sticky; top: 90px; align-self: start;
-  background: var(--white); border: 1px solid var(--g200);
-  border-radius: var(--radius); overflow: hidden;
-}
-.inst-nav a {
-  display: flex; align-items: center; gap: 10px;
-  padding: 13px 18px; color: var(--text-mid); text-decoration: none;
-  font-size: 0.84rem; font-weight: 500;
-  border-left: 3px solid transparent;
-  transition: all var(--transition);
-}
-.inst-nav a:hover { background: var(--g50); color: var(--g700); }
-.inst-nav a.active { border-left-color: var(--g500); background: var(--g50); color: var(--g700); font-weight: 700; }
-.inst-nav-label { padding: 12px 18px 6px; font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-soft); }
-
-/* layout with sidebar */
-.inst-layout { display: grid; grid-template-columns: 220px 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding: 0 48px; }
-
-@media (max-width: 900px) {
-  .two-col { grid-template-columns: 1fr; gap: 32px; }
-  .two-col.reverse { direction: ltr; }
-  .inst-layout { grid-template-columns: 1fr; padding: 0 20px; }
-  .inst-nav { display: none; }
-  .inst-section { padding: 56px 20px; }
-  .contact-grid { grid-template-columns: 1fr; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Institucional — Escuela Técnica N°4 D.E. 5 "República del Líbano"</title>
+  <meta name="description" content="Información institucional, historia, equipo directivo y docente, calendario escolar y plan de estudios.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-left">
-    <a href="#">📞 11 4307-6051</a>
-    <a href="#">✉ det_4_de5@bue.edu.ar</a>
-  </div>
-</div>
+  <!-- Marcadores para inyección de componentes comunes -->
+  <div id="topbar-placeholder"></div>
+  <div id="header-placeholder"></div>
 
-<!-- HEADER -->
-<header>
-  <a href="index.html" class="logo">
-    <div class="logo-icon">EC</div>
-    <div class="logo-text">
-      <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
-      <span>Gestion y Administración de las Organizaciones</span>
-    </div>
-  </a>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="novedades.html">Novedades</a>
-    <a href="institucional.html" class="active">Institucional</a>
-    <a href="login.html" class="nav-cta">Ingresar</a>
-    <a href="novedades.html#publicar" class="nav-cta">+ Publicar</a>
-  </nav>
-  <button class="hamburger" id="hamburger" aria-label="Menú">
-    <span></span><span></span><span></span>
-  </button>
-</header>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html">Inicio</a>
-  <a href="novedades.html">Novedades</a>
-  <a href="institucional.html" class="active">Institucional</a>
-  <a href="login.html" class="nav-cta">Ingresar</a>
-  <a href="novedades.html#publicar">+ Publicar novedad</a>
-</div>
-
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="page-hero-pattern"></div>
-  <div class="page-hero-content">
-    <div class="page-hero-label">Nuestra institución</div>
-    <h1>Información <em>Institucional</em></h1>
-    <p>Conocé nuestra historia, autoridades, calendario, especialidad, trámites y todos los recursos de la escuela.</p>
-    <div class="breadcrumb">
-      <a href="index.html">Inicio</a>
-      <span>/</span>
-      <span style="color:rgba(255,255,255,0.55)">Institucional</span>
-    </div>
-  </div>
-</div>
-
-<!-- QUICK ACCESS CARDS -->
-<div style="background:var(--g50);padding:32px 48px">
-  <div class="cards-row">
-    <a href="#historia"        class="info-card light"><div class="info-card-icon">🏛️</div><h3>Historia</h3><p>Nuestros orígenes e identidad</p></a>
-    <a href="#autoridades"     class="info-card light"><div class="info-card-icon">👥</div><h3>Autoridades</h3><p>Equipo directivo y docente</p></a>
-    <a href="#especialidad"    class="info-card light"><div class="info-card-icon">🎓</div><h3>Especialidad</h3><p>Gestion y Administración de las Organizaciones</p></a>
-    <a href="#calendario"      class="info-card light"><div class="info-card-icon">📅</div><h3>Calendario</h3><p>Fechas del ciclo lectivo</p></a>
-    <a href="#inscripciones"   class="info-card light"><div class="info-card-icon">📋</div><h3>Inscripciones</h3><p>Proceso y requisitos</p></a>
-    <a href="#examenes"        class="info-card light"><div class="info-card-icon">📝</div><h3>Exámenes</h3><p>Mesas y fechas de examen</p></a>
-    <a href="#biblioteca"      class="info-card light"><div class="info-card-icon">📚</div><h3>Biblioteca</h3><p>Recursos y servicios</p></a>
-    <a href="#acompanamiento"  class="info-card light"><div class="info-card-icon">💬</div><h3>Acompañamiento</h3><p>Apoyo pedagógico y tutoría</p></a>
-    <a href="#contacto"        class="info-card light"><div class="info-card-icon">📞</div><h3>Contacto</h3><p>Secretaría y departamentos</p></a>
-  </div>
-</div>
-
-<!-- ─────────────────────────────
-     HISTORIA
-───────────────────────────── -->
-<div class="inst-section" id="historia">
-  <div class="section-label">Nuestros orígenes</div>
-  <h2 class="section-title" style="margin-bottom:40px">Historia de la Institución</h2>
-  <div class="two-col reveal">
-    <div class="content-block">
-      <p>La historia de nuestra institución es un reflejo de la evolución de la enseñanza técnica y los cambios sociales en Argentina. Fundada el 6 de mayo de 1906 mediante un decreto del presidente Dr. Manuel Quintana, la escuela nació bajo el nombre de "Escuela Profesional N° 3", impulsada por la visión educativa del entonces Ministro de Justicia e Instrucción Pública, Joaquín V. González.
-      </p>
-      <p>Desde su creación, la escHitos de nuestra trayectoria:
-      </p>
-      <p>Identidad en Barracas: Tras funcionar en sedes de las calles Sáenz Peña y Venezuela, la escuela se estableció definitivamente en Av. Montes de Oca 121. Este solar posee una gran carga histórica, habiendo sido antiguamente la estancia de la familia Cambaceres, una de las más influyentes del siglo XIX en el barrio.
-      </p>
-      <p>Transformación Técnica: A mediados del siglo XX, con la creación del CONET, la institución se transformó en una escuela técnica mixta. Este cambio permitió dejar atrás los talleres de oficios antiguos para adoptar la especialidad actual en Gestión y Administración, adaptándose a las demandas de modernización del sector empresarial.
-      </p>
-      <p>Cultura y Valores: El nombre "República del Líbano" rinde homenaje a la hermandad con la colectividad libanesa en el país. Nuestra biblioteca, denominada Yibrán Jalil Yibrán, simboliza el espíritu de unidad, cultura y convivencia que define a nuestra comunidad educativa.
-      </p>
-      <p>Hoy, con 120 años de historia, la ET N°4 continúa siendo un faro de innovación en la formación administrativa, ponderando su rica experiencia mientras mira hacia el futuro de la educación técnica profesional.
-      </p>
-      <div class="stat-row">
-        <div class="stat-box"><strong>120+</strong><span>Años</span></div>
-        <div class="stat-box"><strong>600+</strong><span>Alumnos</span></div>
-        <div class="stat-box"><strong>1000+</strong><span>Egresados</span></div>
-        <div class="stat-box"><strong>85+</strong><span>Docentes</span></div>
-      </div>
-    </div>
-    <div>
-      <div class="highlight-box">
-        <h3>Nuestra Libano</h3>
-        <p>La Escuela Técnica N°4 D.E. 5 "República del Líbano" es una institución de educación pública de la Ciudad de Buenos Aires, ubicada en el histórico barrio de Barracas (Av. Montes de Oca 121). Con más de 119 años de trayectoria, formamos parte de la identidad educativa de la zona sur, brindando herramientas de excelencia para el desarrollo profesional de nuestros jóvenes.</p>
-        <p>Nuestra propuesta pedagógica se especializa en la formación de Técnicos en Gestión y Administración de las Organizaciones. A lo largo de seis años de formación —divididos en un Ciclo Básico de contenidos generales y un Ciclo Superior de especialización—, los estudiantes adquieren competencias críticas en contabilidad, economía y herramientas informáticas de vanguardia.</p>
-        <p>La misión de la escuela es garantizar una inserción laboral efectiva y una base sólida para estudios superiores. Mediante las Prácticas Profesionalizantes, nuestros alumnos aplican sus saberes en entornos reales de trabajo, consolidando un aprendizaje que equilibra la teoría académica con la práctica profesional. Educamos bajo los valores de responsabilidad y compromiso, preparando técnicos idóneos para los desafíos del mercado laboral actual.</p>       
-      </div>
-      <div style="margin-top:20px">
-        <div class="timeline">
-          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">1906</div><div class="timeline-title">Fundación como Escuela Profesional N° 3</div><div class="timeline-desc">Creada el 6 de mayo bajo el decreto del presidente Dr. Manuel Quintana y el impulso de Joaquín V. González.</div></div>
-          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">Primeros Años</div><div class="timeline-title">Enfoque en Oficios Femeninos</div><div class="timeline-desc">La institución nace como una escuela exclusiva para mujeres con talleres de Corte y Confección, Lencería y Encajes.</div></div>
-          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">Trayectoria Institucional</div><div class="timeline-title">Peregrinaje por la Ciudad</div><div class="timeline-desc">Antes de su ubicación definitiva, la escuela funcionó en sedes de las calles Sáenz Peña 1173 y Venezuela 450.</div></div>
-          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">Mediados del Siglo XX</div><div class="timeline-title">Integración al Sistema Técnico</div><div class="timeline-desc">Con el auge del CONET, deja de ser "Escuela Profesional" para convertirse en una Escuela Técnica mixta.</div></div>
-          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">Actualidad</div><div class="timeline-title">Especialización en Gestión y Administración</div><div class="timeline-desc">Consolidación de la oferta educativa actual, orientada a la formación de técnicos para el sector administrativo y empresarial moderno.</div></div>
-          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">2025/2026</div><div class="timeline-title">120 Años de Trayectoria</div><div class="timeline-desc">La escuela celebra más de un siglo formando profesionales en el histórico edificio de Av. Montes de Oca 121, antigua estancia de los Cambaceres.</div></div>
-        </div>
+  <!-- PAGE HERO -->
+  <div class="page-hero" id="instHero">
+    <div class="page-hero-pattern"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label">Nuestra institución</div>
+      <h1>Información <em>Institucional</em></h1>
+      <p>Conocé nuestra historia, autoridades, calendario, especialidad, trámites y todos los recursos de la escuela.</p>
+      <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span>/</span>
+        <span style="color:rgba(255,255,255,0.55)">Institucional</span>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ─────────────────────────────
-     AUTORIDADES
-───────────────────────────── -->
-<div class="inst-section" id="autoridades">
-  <div class="section-label">Equipo directivo</div>
-  <h2 class="section-title" style="margin-bottom:40px">Autoridades</h2>
-  <div class="autoridades-grid reveal">
-    <div class="autoridad-card"><div class="autoridad-avatar">👩‍💼</div><h4>NM</h4><div class="cargo">Rectora</div></div>
-    <div class="autoridad-card"><div class="autoridad-avatar">👨‍💼</div><h4>NM</h4><div class="cargo">Vicerrector</div></div>
-    <div class="autoridad-card"><div class="autoridad-avatar">👩‍🏫</div><h4>NM</h4><div class="cargo">Secretaría </div></div>
-    <div class="autoridad-card"><div class="autoridad-avatar">👨‍🏫</div><h4>NM</h4><div class="cargo">Coord.Tutoria</div></div>
-    <div class="autoridad-card"><div class="autoridad-avatar">👩‍🔬</div><h4>NM</h4><div class="cargo">Coord.Areas</div></div>
-    <div class="autoridad-card"><div class="autoridad-avatar">👨‍💻</div><h4>NM</h4><div class="cargo">Libanito</div></div>
-  </div>
-  <div style="margin-top:40px" class="reveal">
-    <div class="section-label">Coordinacion</div>
-    <div class="accordion" style="margin-top:16px">
-      <div class="accordion-item">
-        <button class="accordion-trigger">Departamento de Administración y Gestión <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">Responsable del dictado de materias como Administración General, Gestión de Recursos Humanos, Organización Empresarial y Proyecto de Empresa. Coordina las actividades de pasantías con empresas del sector.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Departamento de Contabilidad y Finanzas <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">Dicta Contabilidad General, Contabilidad Avanzada, Análisis de Estados Contables, Finanzas de la Empresa y Costos. Trabaja en articulación con facultades de Ciencias Económicas para facilitar el ingreso universitario.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Departamento de Comercio y Marketing <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">Cubre Comercio Nacional e Internacional, Marketing, Publicidad y Propaganda, Técnicas de Venta y Negociación. Los alumnos desarrollan proyectos reales con empresas locales.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Departamento de Tecnología e Informática <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">Informática aplicada a la gestión, Sistemas de Información, Hoja de Cálculo Avanzada, Comercio Electrónico y Herramientas Digitales. Laboratorio con 40 equipos de última generación.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Departamento de Formación General <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">Matemática, Estadística, Lengua y Literatura, Inglés Comercial, Geografía Económica, Historia Argentina y Latinoamericana, Derecho y Educación Cívica.</div>
-      </div>
+  <!-- QUICK ACCESS CARDS -->
+  <div style="background:var(--g50);padding:32px 48px" id="quickAccessCards">
+    <div class="cards-row">
+      <a href="#historia"        class="info-card light" id="linkHist"><div class="info-card-icon">🏛️</div><h3>Historia</h3><p>Nuestros orígenes e identidad</p></a>
+      <a href="#autoridades"     class="info-card light" id="linkAut"><div class="info-card-icon">👥</div><h3>Autoridades</h3><p>Equipo directivo y docente</p></a>
+      <a href="#especialidad"    class="info-card light" id="linkEsp"><div class="info-card-icon">🎓</div><h3>Especialidad</h3><p>Gestion y Administración de las Organizaciones</p></a>
+      <a href="#calendario"      class="info-card light" id="linkCal"><div class="info-card-icon">📅</div><h3>Calendario</h3><p>Fechas del ciclo lectivo</p></a>
+      <a href="#inscripciones"   class="info-card light" id="linkIns"><div class="info-card-icon">📋</div><h3>Inscripciones</h3><p>Proceso y requisitos</p></a>
+      <a href="#examenes"        class="info-card light" id="linkExa"><div class="info-card-icon">📝</div><h3>Exámenes</h3><p>Mesas y fechas de examen</p></a>
+      <a href="#biblioteca"      class="info-card light" id="linkBib"><div class="info-card-icon">📚</div><h3>Biblioteca</h3><p>Recursos y servicios</p></a>
+      <a href="#acompanamiento"  class="info-card light" id="linkAco"><div class="info-card-icon">💬</div><h3>Acompañamiento</h3><p>Apoyo pedagógico y tutoría</p></a>
+      <a href="#contacto"        class="info-card light" id="linkCon"><div class="info-card-icon">📞</div><h3>Contacto</h3><p>Secretaría y departamentos</p></a>
     </div>
   </div>
-</div>
 
-<!-- ─────────────────────────────
-     PROYECTO EDUCATIVO
-───────────────────────────── -->
-<div class="inst-section" id="proyecto">
-  <div class="section-label">Propuesta pedagógica</div>
-  <h2 class="section-title" style="margin-bottom:40px">Proyecto Educativo Institucional</h2>
-  <div class="two-col reveal">
-    <div class="content-block">
-      <p>El Proyecto Educativo Institucional (PEI) de la Escuela Técnica N°4 D.E. 5 "República del Líbano" está orientado a la formación integral de ciudadanos y profesionales técnicos capaces de insertarse con éxito en el mundo laboral y universitario.</p>
-      <p>Nuestra propuesta pedagógica integra el aprendizaje basado en proyectos reales, la vinculación con el entorno empresarial y la incorporación permanente de tecnologías educativas.</p>
-      <p>El currículum articula las materias de formación general con las asignaturas técnicas específicas, permitiendo que los alumnos desarrollen competencias transversales como:</p>
-      <ul>
-          <li><strong>Pensamiento crítico:</strong> Capacidad de analizar y evaluar situaciones contables, financieras y económicas de forma objetiva.</li>
-          <li><strong>Resolución de problemas:</strong> Aplicación de conocimientos específicos en costos, impuestos y normativas en contextos organizacionales reales.</li>
-          <li><strong>Trabajo en equipo:</strong> Colaboración efectiva en el desarrollo de simulaciones operativas y proyectos institucionales.</li>
-          <li><strong>Gestión y Administración:</strong> Formación específica para liderar procesos y flujos de control dentro de organizaciones modernas.</li>
-      </ul>
-    </div>
-    <div>
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-trigger">Objetivos institucionales <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
-              <ul>
-                  <li><strong>Sólida Base Técnica:</strong> Formar Técnicos en Gestión y Administración de las Organizaciones con un dominio riguroso de las herramientas contables, impositivas y financieras.</li>
-                  <li><strong>Inserción y Continuidad:</strong> Promover la inserción laboral efectiva y la articulación exitosa con los estudios superiores de todos los graduados.</li>
-                  <li><strong>Identidad y Valores:</strong> Fomentar el compromiso ciudadano y el respeto por la identidad cultural, inspirados en los valores de convivencia que representa nuestro nombre.</li>
-              </ul>
+  <div class="inst-layout">
+    <!-- STICKY SIDE NAVIGATION -->
+    <aside class="inst-nav" id="sidebarNavigation">
+      <div class="inst-nav-label">Navegación</div>
+      <a href="#historia" class="active" id="sideLinkHist">🏛️ Historia</a>
+      <a href="#autoridades" id="sideLinkAut">👥 Autoridades</a>
+      <a href="#proyecto" id="sideLinkProy">📖 Proyecto educativo</a>
+      <a href="#ciclobasico" id="sideLinkCiclo">🏫 Ciclo Básico</a>
+      <a href="#especialidad" id="sideLinkEsp">🎓 Especialidad</a>
+      <a href="#calendario" id="sideLinkCal">📅 Calendario</a>
+      <a href="#inscripciones" id="sideLinkIns">📋 Inscripciones</a>
+      <a href="#examenes" id="sideLinkExa">📝 Exámenes</a>
+      <a href="#biblioteca" id="sideLinkBib">📚 Biblioteca</a>
+      <a href="#acompanamiento" id="sideLinkAco">💬 Acompañamiento</a>
+      <a href="#reglamento" id="sideLinkReg">⚖️ Reglamento</a>
+      <a href="#contacto" id="sideLinkCon">📞 Contacto</a>
+    </aside>
+
+    <div class="inst-content-area">
+      <!-- HISTORIA -->
+      <section class="inst-section" id="historia" style="padding-top:0">
+        <div class="section-label">Nuestros orígenes</div>
+        <h2 class="section-title" style="margin-bottom:40px">Historia de la Institución</h2>
+        <div class="two-col reveal">
+          <div class="content-block">
+            <p>La historia de nuestra institución es un reflejo de la evolución de la enseñanza técnica y los cambios sociales en Argentina. Fundada el 6 de mayo de 1906 mediante un decreto del presidente Dr. Manuel Quintana, la escuela nació bajo el nombre de "Escuela Profesional N° 3", impulsada por la visión educativa del entonces Ministro de Justicia e Instrucción Pública, Joaquín V. González.</p>
+            <p>Identidad en Barracas: Tras funcionar en sedes de las calles Sáenz Peña y Venezuela, la escuela se estableció definitivamente en Av. Montes de Oca 121. Este solar posee una gran carga histórica, habiendo sido antiguamente la estancia de la familia Cambaceres, una de las más influyentes del siglo XIX en el barrio.</p>
+            <p>Transformación Técnica: A mediados del siglo XX, con la creación del CONET, la institución se transformó en una escuela técnica mixta. Este cambio permitió dejar atrás los talleres de oficios antiguos para adoptar la especialidad actual en Gestión y Administración, adaptándose a las demandas de modernización del sector empresarial.</p>
+            <p>Cultura y Valores: El nombre "República del Líbano" rinde homenaje a la hermandad con la colectividad libanesa en el país. Nuestra biblioteca, denominada Yibrán Jalil Yibrán, simboliza el espíritu de unidad, cultura y convivencia que define a nuestra comunidad educativa.</p>
+            <p>Hoy, con 120 años de historia, la ET N°4 continúa siendo un faro de innovación en la formación administrativa, ponderando su rica experiencia mientras mira hacia el futuro de la educación técnica profesional.</p>
+            <div class="stat-row">
+              <div class="stat-box"><strong>120+</strong><span>Años</span></div>
+              <div class="stat-box"><strong>600+</strong><span>Alumnos</span></div>
+              <div class="stat-box"><strong>1000+</strong><span>Egresados</span></div>
+              <div class="stat-box"><strong>85+</strong><span>Docentes</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="highlight-box">
+              <h3>Nuestra Líbano</h3>
+              <p>La Escuela Técnica N°4 D.E. 5 "República del Líbano" es una institución de educación pública de la Ciudad de Buenos Aires, ubicada en el histórico barrio de Barracas (Av. Montes de Oca 121). Con más de 120 años de trayectoria, formamos parte de la identidad educativa de la zona sur, brindando herramientas de excelencia para el desarrollo profesional de nuestros jóvenes.</p>
+              <p>Nuestra propuesta pedagógica se especializa en la formación de Técnicos en Gestión y Administración de las Organizaciones. A lo largo de seis años de formación —divididos en un Ciclo Básico de contenidos generales y un Ciclo Superior de especialización—, los estudiantes adquieren competencias críticas en contabilidad, economía y herramientas informáticas de vanguardia.</p>
+              <p>La misión de la escuela es garantizar una inserción laboral efectiva y una base sólida para estudios superiores. Mediante las Prácticas Profesionalizantes, nuestros alumnos aplican sus saberes en entornos reales de trabajo, consolidando un aprendizaje que equilibra la teoría académica con la práctica profesional.</p>       
+            </div>
+            <div style="margin-top:20px">
+              <div class="timeline">
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">1906</div><div class="timeline-title">Fundación como Escuela Profesional N° 3</div><div class="timeline-desc">Creada el 6 de mayo bajo el decreto del presidente Dr. Manuel Quintana y el impulso de Joaquín V. González.</div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">Primeros Años</div><div class="timeline-title">Enfoque en Oficios Femeninos</div><div class="timeline-desc">La institución nace como una escuela exclusiva para mujeres con talleres de Corte y Confección, Lencería y Encajes.</div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">Actualidad</div><div class="timeline-title">Especialización en Gestión y Administración</div><div class="timeline-desc">Consolidación de la oferta educativa orientada a la formación de técnicos para el sector administrativo y empresarial moderno.</div></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Metodologías de enseñanza <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
+      </section>
+
+      <!-- AUTORIDADES -->
+      <section class="inst-section" id="autoridades">
+        <div class="admin-section-header" id="adminControlsAuth" style="display:none;">
+          <h3>Gestión de Directivos</h3>
+          <button class="btn btn-primary btn-sm" onclick="openEditAuthorityModal(null)">+ Agregar Directivo</button>
+        </div>
+        <div class="section-label">Equipo directivo</div>
+        <h2 class="section-title" style="margin-bottom:40px">Autoridades</h2>
+        
+        <div class="autoridades-grid reveal" id="authoritiesGrid"></div>
+        
+        <div style="margin-top:40px" class="reveal">
+          <div class="section-label">Coordinación</div>
+          <div class="accordion" style="margin-top:16px" id="coordAccordion">
+            <div class="accordion-item">
+              <button class="accordion-trigger">Departamento de Administración y Gestión <span class="accordion-icon">▾</span></button>
+              <div class="accordion-body">Responsable del dictado de materias como Administración General, Gestión de Recursos Humanos, Organización Empresarial y Proyecto de Empresa. Coordina las actividades de pasantías con empresas del sector.</div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger">Departamento de Contabilidad y Finanzas <span class="accordion-icon">▾</span></button>
+              <div class="accordion-body">Dicta Contabilidad General, Contabilidad Avanzada, Análisis de Estados Contables, Finanzas de la Empresa y Costos. Trabaja en articulación con facultades de Ciencias Económicas para facilitar el ingreso universitario.</div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger">Departamento de Tecnología e Informática <span class="accordion-icon">▾</span></button>
+              <div class="accordion-body">Informática aplicada a la gestión, Sistemas de Información, Hoja de Cálculo Avanzada, Comercio Electrónico y Herramientas Digitales. Laboratorio con 40 equipos de última generación.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROYECTO EDUCATIVO -->
+      <section class="inst-section" id="proyecto">
+        <div class="section-label">Propuesta pedagógica</div>
+        <h2 class="section-title" style="margin-bottom:40px">Proyecto Educativo Institucional</h2>
+        <div class="two-col reveal">
+          <div class="content-block">
+            <p>El Proyecto Educativo Institucional (PEI) de la Escuela Técnica N°4 D.E. 5 "República del Líbano" está orientado a la formación integral de ciudadanos y profesionales técnicos capaces de insertarse con éxito en el mundo laboral y universitario.</p>
+            <p>Nuestra propuesta pedagógica integra el aprendizaje basado en proyectos reales, la vinculación con el entorno empresarial y la incorporación permanente de tecnologías educativas.</p>
+            <p>El currículum articula las materias de formación general con las asignaturas técnicas específicas, permitiendo que los alumnos desarrollen competencias transversales como pensamiento crítico, resolución de problemas y trabajo en equipo.</p>
+          </div>
+          <div>
+            <div class="accordion" id="peiAccordion">
+              <div class="accordion-item">
+                <button class="accordion-trigger">Objetivos institucionales <span class="accordion-icon">▾</span></button>
+                <div class="accordion-body">
+                  <ul>
+                    <li><strong>Sólida Base Técnica:</strong> Formar Técnicos en Gestión y Administración de las Organizaciones con un dominio riguroso de las herramientas contables, impositivas y financieras.</li>
+                    <li><strong>Inserción y Continuidad:</strong> Promover la inserción laboral efectiva y la articulación exitosa con los estudios superiores de todos los graduados.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-trigger">Metodologías de enseñanza <span class="accordion-icon">▾</span></button>
+                <div class="accordion-body">
+                  <ul>
+                    <li><strong>Trayecto Progresivo:</strong> Estructura de Ciclo Superior que complejiza gradualmente las asignaturas contables, el análisis macro/microeconómico y los marcos legales.</li>
+                    <li><strong>Talleres Contables:</strong> Aplicación práctica de saberes en el Taller Administrativo Contable (TAC).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CICLO BÁSICO -->
+      <section class="inst-section" id="ciclobasico">
+        <div class="section-label">Fundamento Técnico</div>
+        <h2 class="section-title" style="margin-bottom:8px">Ciclo Básico</h2>
+        <p class="section-sub" style="margin-bottom:40px">Primeros 2 años de formación técnica común.</p>
+        <div class="two-col reveal">
+          <div>
+            <div class="highlight-box">
+              <h3>¿Qué vas a aprender?</h3>
+              <p>Desarrollarás habilidades fundamentales que combinan el conocimiento académico general con la introducción al mundo de la administración y la tecnología.</p>
               <ul>
-                  <li><strong>Trayecto Progresivo:</strong> Estructura de Ciclo Superior (de 3° a 6° año) que complejiza gradualmente las asignaturas contables, el análisis macro/microeconómico y los marcos legales.</li>
-                  <li><strong>Talleres Contables:</strong> Aplicación práctica de saberes y uso de software específicos en el Taller Administrativo Contable (TAC) y Computación Aplicada.</li>
-                  <li><strong>Aprendizaje Situado:</strong> Enfoque pedagógico basado en la resolución de problemas administrativos reales que los estudiantes enfrentarán en el mercado laboral.</li>
+                <li>Estructura básica de las organizaciones.</li>
+                <li>Fundamentos iniciales del registro contable.</li>
+                <li>Herramientas informáticas y de representación técnica.</li>
               </ul>
             </div>
+            <div class="stat-row" style="margin-top:20px">
+              <div class="stat-box"><strong>2</strong><span>Años</span></div>
+              <div class="stat-box"><strong>27</strong><span>Materias</span></div>
+              <div class="stat-box"><strong>2</strong><span>Turnos</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="section-label" style="margin-bottom:12px">Plan de estudios por año</div>
+            <div class="materias-grid">
+              <div class="materia-card">
+                <div class="materia-year">1° Año</div>
+                <ul class="MIBOMBO">
+                  <li>Educación Ciudadana</li>
+                  <li>Educación Física</li>
+                  <li>Geografía / Historia</li>
+                  <li>Inglés / Lengua y Literatura</li>
+                  <li>Matemática</li>
+                  <li>Taller (Proyecto y Tecnología)</li>
+                  <li>Tecnología de la Representación</li>
+                </ul>
+              </div>
+              <div class="materia-card">
+                <div class="materia-year">2° Año</div>
+                <ul class="MIBOMBO">
+                  <li>Biología / Física</li>
+                  <li>Educación Ciudadana</li>
+                  <li>Geografía / Historia</li>
+                  <li>Inglés / Lengua y Literatura</li>
+                  <li>Matemática</li>
+                  <li>Taller (Proyecto y Tecnología)</li>
+                  <li>Tecnología de la Representación</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Vinculación empresa-escuela <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
+      </section>
+
+      <!-- ESPECIALIDAD -->
+      <section class="inst-section" id="especialidad">
+        <div class="section-label">Especialización</div>
+        <h2 class="section-title" style="margin-bottom:8px">Ciclo Superior</h2>
+        <p class="section-sub" style="margin-bottom:40px">Título oficial: <strong>Técnico/a en Gestión y Administración de las Organizaciones</strong>.</p>
+        <div class="two-col reveal">
+          <div>
+            <div class="highlight-box">
+              <h3>Perfil Profesional</h3>
               <ul>
-                  <li><strong>Prácticas Profesionalizantes:</strong> Implementación de pasantías y proyectos institucionales en 6° año que permiten a los alumnos integrarse y auditar procesos en entornos laborales reales.</li>
-                  <li><strong>Actualización Curricular:</strong> Adaptación constante de los contenidos de materias clave como Derecho Comercial, Administración de Recursos Humanos y Régimen Tributario a las normativas vigentes.</li>
-                  <li><strong>Perfil Egresado:</strong> Capacitación técnica diseñada con rigor para satisfacer las demandas actuales de gestión y control en organizaciones públicas y privadas.</li>
+                <li>Administración de sistemas contables y financieros.</li>
+                <li>Uso de herramientas de gestión digital avanzadas.</li>
+                <li>Interpretación de normativas y leyes comerciales.</li>
+                <li>Prácticas profesionalizantes en empresas en 6° año.</li>
               </ul>
+            </div>
+            <div class="stat-row" style="margin-top:20px">
+              <div class="stat-box"><strong>4</strong><span>Años</span></div>
+              <div class="stat-box"><strong>39</strong><span>Materias</span></div>
+              <div class="stat-box"><strong>3</strong><span>Turnos</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="section-label" style="margin-bottom:12px">Plan de estudios por año</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="materia-card">
+                <div class="materia-year">3° Año</div>
+                <ul class="MIBOMBO">
+                  <li>Química</li>
+                  <li>LTIAC: Tecnología Aplicada</li>
+                  <li>Taller de Especialidad</li>
+                  <li>Materias Generales</li>
+                </ul>
+              </div>
+              <div class="materia-card">
+                <div class="materia-year">4° Año</div>
+                <ul class="MIBOMBO">
+                  <li>Computación Aplicada I</li>
+                  <li>Contabilidad I</li>
+                  <li>Matemática Financiera</li>
+                  <li>Taller Administrativo Contable</li>
+                </ul>
+              </div>
+              <div class="materia-card" style="margin-top:10px;">
+                <div class="materia-year">5° Año</div>
+                <ul class="MIBOMBO">
+                  <li>Computación Aplicada II</li>
+                  <li>Contabilidad II / Costos</li>
+                  <li>Derecho e Impuestos</li>
+                  <li>Psicología Organizacional</li>
+                </ul>
+              </div>
+              <div class="materia-card" style="margin-top:10px;">
+                <div class="materia-year">6° Año</div>
+                <ul class="MIBOMBO">
+                  <li>Bancos y Finanzas</li>
+                  <li>Derecho Comercial</li>
+                  <li>Prácticas Profesionalizantes</li>
+                  <li>Recursos Humanos / Marketing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <!-- CALENDARIO -->
+      <section class="inst-section" id="calendario">
+        <div class="admin-section-header" id="adminControlsCal" style="display:none;">
+          <h3>Gestión del Calendario</h3>
+          <button class="btn btn-primary btn-sm" onclick="openEditCalendarModal(null)">+ Agregar Fecha</button>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Inclusión y diversidad <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
+        <div class="section-label">Ciclo lectivo 2026</div>
+        <h2 class="section-title" style="margin-bottom:40px">Calendario Escolar</h2>
+        
+        <div class="cal-grid reveal" id="calendarGrid"></div>
+      </section>
+
+      <!-- INSCRIPCIONES -->
+      <section class="inst-section" id="inscripciones">
+        <div class="section-label">Trámites y requisitos</div>
+        <h2 class="section-title" style="margin-bottom:40px">Inscripciones</h2>
+        <div class="two-col reveal">
+          <div>
+            <div class="accordion" id="inscAccordion">
+              <div class="accordion-item">
+                <button class="accordion-trigger">Ingreso a 1° año <span class="accordion-icon">▾</span></button>
+                <div class="accordion-body">
+                  <strong>Período de inscripción:</strong> Octubre a Noviembre.<br><br>
+                  <strong>Requisitos obligatorios:</strong><br>
+                  • DNI del alumno (original y copia)<br>
+                  • Certificado de egreso de 7° grado primario<br>
+                  • Constancia de CUIL y 2 fotos 4×4<br>
+                  • Partida de nacimiento (original y copia)<br><br>
+                  La inscripción es presencial en Secretaría.
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-trigger">Renovación de matrícula <span class="accordion-icon">▾</span></button>
+                <div class="accordion-body">
+                  Se realiza en Diciembre. El trámite inicia online por el portal oficial del GCBA y se finaliza entregando la documentación personal firmada en Secretaría.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-block">
+            <h3 style="font-family:'Playfair Display',serif;color:var(--g900);font-size:1.3rem;margin-bottom:14px">Vacantes estimadas</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Año</th><th>Turno</th><th>Estado</th></tr></thead>
+                <tbody>
+                  <tr><td>1° año</td><td>Mañana (7:30 hs)</td><td><span class="badge badge-green">Abiertas</span></td></tr>
+                  <tr><td>1° año</td><td>Tarde (13:00 hs)</td><td><span class="badge badge-gold">Casi completo</span></td></tr>
+                  <tr><td>2° a 6°</td><td>Mañana / Tarde / Noche</td><td><span class="badge badge-soft">Solo Pases</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:16px;font-size:0.82rem;color:var(--text-soft)">* Vacantes sujetas a reconfirmación en Secretaría.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXÁMENES -->
+      <section class="inst-section" id="examenes">
+        <div class="section-label">Mesas y fechas</div>
+        <h2 class="section-title" style="margin-bottom:40px">Exámenes y Evaluaciones</h2>
+        <div class="two-col reveal">
+          <div>
+            <div class="section-label" style="margin-bottom:12px">Cronograma General</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Mesa</th><th>Período</th></tr></thead>
+                <tbody>
+                  <tr><td>Exámenes Previos de Julio</td><td>Fines de Julio</td></tr>
+                  <tr><td>Exámenes Regulares Diciembre</td><td>Inicios de Diciembre</td></tr>
+                  <tr><td>Exámenes Regulares Febrero</td><td>Mediados de Febrero</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <div class="accordion" id="examAccordion">
+              <div class="accordion-item">
+                <button class="accordion-trigger">¿Cómo inscribirse? <span class="accordion-icon">▾</span></button>
+                <div class="accordion-body">La inscripción se abre 15 días antes del período de examen a través de la plataforma escolar o presencial en preceptoría firmando la solicitud.</div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-trigger">Aprobación <span class="accordion-icon">▾</span></button>
+                <div class="accordion-body">La nota de aprobación mínima es de 7 (siete) puntos. Quien obtenga menos de 4 puntos deberá rendir nuevamente en la mesa siguiente.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BIBLIOTECA -->
+      <section class="inst-section" id="biblioteca">
+        <div class="section-label">Recursos académicos</div>
+        <h2 class="section-title" style="margin-bottom:40px">Biblioteca "Yibrán Jalil Yibrán"</h2>
+        <div class="two-col reveal">
+          <div class="content-block">
+            <p>La biblioteca cuenta con más de 3,000 volúmenes en papel orientados a la especialidad comercial, economía, contabilidad y literatura general, además de recursos digitales.</p>
+            <div class="stat-row">
+              <div class="stat-box"><strong>3000+</strong><span>Libros físicos</span></div>
+              <div class="stat-box"><strong>500+</strong><span>Recursos Digitales</span></div>
+              <div class="stat-box"><strong>25</strong><span>Puestos de lectura</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="highlight-box">
+              <h3>Servicios</h3>
               <ul>
-                  <li><strong>Evolución Social:</strong> Consolidación del trayecto institucional que transformó una escuela históricamente femenina en una institución técnica mixta, abierta e inclusiva.</li>
-                  <li><strong>Valores de Integración:</strong> Promoción activa del diálogo intercultural, reflejado en el espacio de nuestra biblioteca Yibrán Jalil Yibrán y el permanente homenaje a la comunidad libanesa.</li>
-                  <li><strong>Acompañamiento Continuo:</strong> Estrategias de apoyo pedagógico para asegurar que cada estudiante asimile las competencias técnicas y profesionales sin importar su punto de partida.</li>
+                <li>Préstamos domiciliarios y en sala.</li>
+                <li>Búsqueda bibliográfica guiada por profesionales.</li>
+                <li>Sala de computadoras con acceso a Internet para investigación.</li>
               </ul>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- ACOMPAÑAMIENTO -->
+      <section class="inst-section" id="acompanamiento">
+        <div class="section-label">Apoyo escolar</div>
+        <h2 class="section-title" style="margin-bottom:40px">Programa de Acompañamiento Estudiantil</h2>
+        <div class="two-col reveal">
+          <div>
+            <div class="highlight-box">
+              <h3>Ejes del programa</h3>
+              <ul>
+                <li>Tutorías pedagógicas en materias contables y exactas.</li>
+                <li>Talleres de técnicas de estudio y organización personal.</li>
+                <li>Orientación Vocacional orientada al egreso superior y laboral.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="content-block">
+            <h3>Equipo de Orientación Escolar (EOE)</h3>
+            <p>Un espacio confidencial y de contención a disposición de alumnos y familias ante problemáticas de aprendizaje, convivencia o bienestar emocional.</p>
+            <div style="background:var(--g50);border-left:4px solid var(--g500);border-radius:var(--radius-sm);padding:16px 20px">
+              <div style="font-size:0.8rem;font-weight:700;color:var(--g700);margin-bottom:4px">Atención EOE</div>
+              <div style="font-size:0.85rem;color:var(--text-mid)">Lunes a viernes. Solicitar entrevista en secretaría.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REGLAMENTO -->
+      <section class="inst-section" id="reglamento">
+        <div class="section-label">Normas y acuerdos</div>
+        <h2 class="section-title" style="margin-bottom:40px">Reglamento de Convivencia</h2>
+        <div class="reveal">
+          <div class="accordion" id="regAccordion">
+            <div class="accordion-item">
+              <button class="accordion-trigger">Uniforme escolar <span class="accordion-icon">▾</span></button>
+              <div class="accordion-body">Chomba blanca reglamentaria con escudo del colegio, pantalón de vestir o deportivo azul oscuro/negro y calzado cerrado oscuro.</div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger">Asistencia obligatoria <span class="accordion-icon">▾</span></button>
+              <div class="accordion-body">El estudiante debe mantener un mínimo del 75% de asistencia para sostener la regularidad y poder promocionar las asignaturas.</div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger">Dispositivos móviles <span class="accordion-icon">▾</span></button>
+              <div class="accordion-body">El celular sólo se permite en el aula con autorización explícita del docente y con fines estrictamente pedagógicos.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACTO -->
+      <section class="inst-section" id="contacto">
+        <div class="section-label">Canales oficiales</div>
+        <h2 class="section-title" style="margin-bottom:40px">Contacto</h2>
+        <div class="two-col reveal">
+          <div>
+            <div class="contact-grid">
+              <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Dirección</h4><p>Av. Montes de Oca 121, CABA<br>Buenos Aires, Argentina</p></div></div>
+              <div class="contact-item"><div class="contact-icon">📞</div><div><h4>Teléfono</h4><p>11 4307-6051<br>Lunes a viernes 8:00 a 20:00 hs</p></div></div>
+              <div class="contact-item"><div class="contact-icon">✉</div><div><h4>Email</h4><p>det_4_de5@bue.edu.ar</p></div></div>
+            </div>
+          </div>
+          <div>
+            <div style="background:var(--g100);border-radius:var(--radius-lg);padding:32px">
+              <div class="section-label" style="margin-bottom:12px">Envianos un mensaje</div>
+              <div class="form-group" style="margin-bottom:14px"><label>Nombre y apellido</label><input type="text" placeholder="Nombre completo"></div>
+              <div class="form-group" style="margin-bottom:14px"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
+              <div class="form-group" style="margin-bottom:20px"><label>Consulta</label><textarea placeholder="Escribí tu consulta..." style="min-height:90px"></textarea></div>
+              <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="showToast('✅ Mensaje enviado correctamente')">Enviar mensaje →</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
-</div>
-<!-- ─────────────────────────────
-     CICLO BASICO
-───────────────────────────── -->
-<div class="inst-section" id="especialidad">
-<h2 class="section-title" style="margin-bottom:8px">Ciclo Basico</h2>
-  <div class="two-col reveal">
-    <div>
-      <div class="highlight-box">
-        <h3>¿Qué vas a aprender?</h3>
-        <p>Durante los primeros 2 años de formación técnica, desarrollarás habilidades fundamentales que combinan el conocimiento académico general con la introducción al mundo de la administración y la tecnología.</p>
-        <ul>
-          <li>Adquirir conocimientos técnicos básicos sobre la estructura de las organizaciones.</li>
-          <li>Aprender los fundamentos iniciales de la contabilidad y el registro de datos.</li>
-          <li>Utilizar herramientas informáticas esenciales para la gestión de información.</li>
-          <li>Desarrollar habilidades básicas en dibujo técnico y representación gráfica.</li>
-          <li>Incorporar metodologías de diseño y ejecución de proyectos en los talleres.</li>
-          <li>Comprender los procesos iniciales de producción y transformación de materiales.</li>
-          <li>Resolver problemas lógicos mediante el pensamiento científico y matemático.</li>
-        </ul>
-      </div>
-      <div class="stat-row" style="margin-top:20px">
-        <div class="stat-box"><strong>2</strong><span>Años</span></div>
-        <div class="stat-box"><strong>27</strong><span>Materias</span></div>
-        <div class="stat-box"><strong>3</strong><span>Turnos</span></div>
-      </div>
-    </div>
-    <div>
-      <div class="section-label" style="margin-bottom:12px">Plan de estudios por año</div>
-      <div class="materias-grid">
-       <div class="materia-card"><div class="materia-year">1° Año</div>
-      <ul class="MIBOMBO">
-        <li>BIOLOGIA</li>
-        <li>EDUCACION ARTISTICA</li>
-        <li>EDUCACION CIUDADANA</li>
-        <li>EDUCACION FISICA</li>
-        <li>GEOGRAFIA</li>
-        <li>HISTORIA</li>
-        <li>INGLES</li>
-        <li>LENGUA Y LITERATURA</li>
-        <li>MATEMATICA</li>
-        <li>TECNOLOGIA DE LA REPRESENTACION</li>
-        <li>TALLER(PROYECTO)</li>
-        <li>TALLER(TECNOLOGIA)</li>
-        <li>TECNOLOGIA DE LA PRODUCCION</li>
-      </ul></div>
-        <div class="materia-card"><div class="materia-year">2° Año</div>
-      <ul class="MIBOMBO">
-        <li>BIOLOGIA</li>
-        <li>EDUCACION CIUDADANA</li>
-        <li>EDUCACION FISICA</li>
-        <li>FISICA</li>
-        <li>GEOGRAFIA</li>
-        <li>HISTORIA</li>
-        <li>INGLES</li>
-        <li>LENGUA Y LITERATURA</li>
-        <li>MATEMATICAS</li>
-        <li>TECNOLOGIA DE LA REPRESENTACION</li>
-        <li>TALLER(PROYECTO)</li>
-        <li>TALLER(TECNOLOGIA)</li>
-        <li>TECNOLOGIA DE LA REPRESENTACION</li>
-      </ul></div>
+
+  <!-- Marcadores para footer y modal -->
+  <div id="footer-placeholder"></div>
+  <div id="modal-placeholder"></div>
+  <div class="toast" id="toast"></div>
+
+  <!-- MODAL EDITAR DIRECTIVO (CLIENT-SIDE) -->
+  <div class="modal-overlay" id="authEditOverlay">
+    <div class="modal" style="max-width: 500px;">
+      <button class="modal-close" onclick="document.getElementById('authEditOverlay').classList.remove('open')">✕</button>
+      <h2 id="authModalTitle" style="font-family:'Playfair Display',serif; margin-bottom: 24px; color: var(--g900)">Editar Directivo</h2>
+      <form id="authEditForm" style="display: flex; flex-direction: column; gap: 16px;">
+        <input type="hidden" id="authId">
         
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ─────────────────────────────
-     ESPECIALIDAD
-───────────────────────────── -->
-<div class="inst-section" id="especialidad">
-  <div class="section-label">Nuestra única especialidad</div>
-  <h2 class="section-title" style="margin-bottom:8px">Gestion y Administración de las Organizaciones</h2>
-  <p class="section-sub" style="margin-bottom:40px">Título otorgado: <strong>Técnico/a en Gestion y Administración de las Organizaciones</strong> — reconocido a nivel nacional.</p>
-  <div class="two-col reveal">
-    <div>
-      <div class="highlight-box">
-        <h3>¿Qué vas a aprender?</h3>
-        <ul>
-          <li>Administrar sistemas contables financieros y de costos institucionales.</li>
-          <li>Operar herramientas avanzadas de computación aplicadas a la gestión.</li>
-          <li>Interpretar normativas del derecho comercial, administrativo e impositivo.</li>
-          <li>Gestionar el área de recursos humanos y analizar la psicología organizacional.</li>
-          <li>Diseñar estrategias de marketing y evaluar la economía del entorno.</li>
-          <li>Analizar operaciones en el sistema de bancos y finanzas corporativas.</li>
-          <li>Desarrollar prácticas profesionalizantes en entornos laborales reales.</li>
-        </ul>
-      </div>
-      <div class="stat-row" style="margin-top:20px">
-        <div class="stat-box"><strong>6</strong><span>Años</span></div>
-        <div class="stat-box"><strong>48</strong><span>Materias</span></div>
-        <div class="stat-box"><strong>3</strong><span>Turnos</span></div>
-      </div>
-    </div>
-    <div>
-      <div class="section-label" style="margin-bottom:12px">Plan de estudios por año</div>
-      <div class="materias-grid">
-       <div class="materia-card"><div class="materia-year">3° Año</div>
-       <ul class="MIBOMBO">
-       <li>EDUCACION CIUDADANA</li>
-       <li>EDUCACIÓN FÍSICA</li>
-       <li>FÍSICA</li>
-       <li>GEOGRAFÍA</li>
-       <li>HISTORIA</li>
-       <li>INGLÉS</li>
-       <li>LENGUA Y LITERATURAa</li>
-       <li>MATEMÁTICA</li>
-       <li>QUÍMICA</li>
-       <li>TALLER DE LA ESPECIALIDAD</li>
-       <li>TECNOLOGÍA DE LA REPRESENTACIÓN</li>
-       <li>TIAC: TALLER DE TECNOLOGÍA APLICADA Y DEL CONTROL</li></ul></div>
-        <div class="materia-card"><div class="materia-year">4° Año</div>
-        <ul class="MIBOMBO">
-          <li>CIUDADANÍA Y TRABAJO</li>
-          <li>COMPUTACIÓN APLICADA I</li>
-          <li>CONTABILIDAD I</li>
-          <li>EDUCACIÓN FÍSICA</li>
-          <li>HISTORIA DE LA INDUSTRIA Y COMERCIO</li>
-          <li>INGLÉS</li>
-          <li>INTRODUCCIÓN A LA ECONOMÍA</li>
-          <li>LENGUA Y LITERATURA</li>
-          <li>MATEMÁTICA</li>
-          <li>MATEMÁTICA FINANCIERA</li>
-          <li>QUÍMICA APLICADA</li>
-          <li>TAC: TALLER ADMINISTRATIVO CONTABLE</li>
-          <li>TEORÍA DE LAS ORGANIZACIONES</li>
-        </ul>
+        <div class="form-group-login">
+          <label style="color: var(--text-dark); font-weight:700;">Nombre Completo *</label>
+          <input type="text" id="authName" required placeholder="Ej: Dra. María Pérez">
         </div>
-        <div class="materia-card"><div class="materia-year">5° Año</div>
-        <ul class="MIBOMBO">
-          <li>COMPUTACIÓN APLICADA II</li>
-          <li>CONTABILIDAD II</li>
-          <li>COSTOS</li>
-          <li>ECONOMÍA Y GESTIÓN DE LAS ORGANIZACIONES</li>
-          <li>EDUCACIÓN FÍSICA</li>
-          <li>GEOGRAFÍA ECONÓMICA ARGENTINA</li>
-          <li>INGLÉS</li>
-          <li>INTRODUCCIÓN AL DERECHO</li>
-          <li>LENGUA Y LITERATURA</li>
-          <li>MATEMÁTICA</li>
-          <li>ORGANIZACIÓN DE LA PRODUCCIÓN</li>
-          <li>PSICOLOGÍA DE LAS ORGANIZACIONES</li>
-          <li>TAC: TALLER ADMINISTRATIVO CONTABLE</li>
-        </ul>
-        </div>
-        <div class="materia-card"><div class="materia-year">6° Año</div>
-        <ul class="MIBOMBO">
-            <li>BANCOS Y FINANZAS</li>
-            <li>CIENCIA Y TECNOLOGÍA</li>
-            <li>COMPUTACIÓN APLICADA III</li>
-            <li>DERECHO COMERCIAL Y ADMINISTRATIVO</li>
-            <li>EDUCACIÓN FÍSICA</li>
-            <li>ESTADOS CONTABLES</li>
-            <li>GESTIÓN DE PROCESOS PRODUCTIVOS</li>
-            <li>IMPUESTOS</li>
-            <li>INGLÉS</li>
-            <li>MARKETING</li>
-            <li>MATEMÁTICA</li>
-            <li>PRÁCTICAS PROFESIONALIZANTES</li>
-            <li>RRHH: RECURSOS HUMANOS</li>
-          </ul>
-        </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-<!-- ─────────────────────────────
-     CALENDARIO
-───────────────────────────── -->
-<div class="inst-section" id="calendario">
-  <div class="section-label">Ciclo lectivo 2026</div>
-  <h2 class="section-title" style="margin-bottom:40px">Calendario Escolar</h2>
-  <div class="cal-grid reveal">
-    <div class="cal-month">
-      <div class="cal-month-header"><h4>Febrero / Marzo</h4><span>Inicio de clases</span></div>
-      <div class="cal-event"><div class="cal-day important">17/2</div><div class="cal-event-info"><strong>Inicio de clases 1° año</strong><span>Jornada de bienvenida e inducción</span></div></div>
-      <div class="cal-event"><div class="cal-day important">3/3</div><div class="cal-event-info"><strong>Inicio de clases 2° a 6° año</strong><span>Retorno al ciclo lectivo</span></div></div>
-    </div>
-    <div class="cal-month">
-      <div class="cal-month-header"><h4>Abril</h4><span>Semana Santa</span></div>
-      <div class="cal-event"><div class="cal-day">14/4</div><div class="cal-event-info"><strong>Feriado — Semana Santa</strong><span>Sin actividad escolar</span></div></div>
-      <div class="cal-event"><div class="cal-day">17/4</div><div class="cal-event-info"><strong>Feriado — Semana Santa</strong><span>Sin actividad escolar</span></div></div>
-      <div class="cal-event"><div class="cal-day">18/4</div><div class="cal-event-info"><strong>Reunión de padres 1° año</strong><span>18:00 hs — Aula Magna</span></div></div>
-    </div>
-    <div class="cal-month">
-      <div class="cal-month-header"><h4>Mayo / Junio</h4><span>Evaluaciones 1° Bimestre</span></div>
-      <div class="cal-event"><div class="cal-day important">26/5</div><div class="cal-event-info"><strong>Acto 25 de Mayo</strong><span>9:00 hs — Patio central</span></div></div>
-      <div class="cal-event"><div class="cal-day">2/6</div><div class="cal-event-info"><strong>Inicio período de exámenes</strong><span>1° bimestre — todos los años</span></div></div>
-      <div class="cal-event"><div class="cal-day">20/6</div><div class="cal-event-info"><strong>Feriado — Día de la Bandera</strong><span>Sin actividad escolar</span></div></div>
-    </div>
-    <div class="cal-month">
-      <div class="cal-month-header"><h4>Julio</h4><span>Receso invernal</span></div>
-      <div class="cal-event"><div class="cal-day important">7/7</div><div class="cal-event-info"><strong>Inicio receso invernal</strong><span>Hasta el 18 de julio inclusive</span></div></div>
-      <div class="cal-event"><div class="cal-day">21/7</div><div class="cal-event-info"><strong>Regreso a clases</strong><span>Todos los turnos</span></div></div>
-      <div class="cal-event"><div class="cal-day">28/7</div><div class="cal-event-info"><strong>Mesa de exámenes complementaria</strong><span>Materias previas — inscripción previa</span></div></div>
-    </div>
-    <div class="cal-month">
-        <div class="cal-month-header"><h4>Octubre</h4><span>Semana Santa</span></div>
-        <div class="cal-event"><div class="cal-day">14/4</div><div class="cal-event-info"><strong>Expo Tecnica</strong><span></span></div></div>
-        <div class="cal-event"><div class="cal-day">17/4</div><div class="cal-event-info"><strong>Feriado 10-12</strong><span>Sin actividad escolar</span></div></div>
-       
-      </div>
-    <div class="cal-month">
-      <div class="cal-month-header"><h4>Agosto / Septiembre</h4><span>Evaluaciones 2° Bimestre</span></div>
-      <div class="cal-event"><div class="cal-day important">4/8</div><div class="cal-event-info"><strong>EXPO Escuela 2025</strong><span>9:00 a 17:00 hs — Entrada libre</span></div></div>
-      <div class="cal-event"><div class="cal-day">1/9</div><div class="cal-event-info"><strong>Inicio período de exámenes</strong><span>2° bimestre — todos los años</span></div></div>
-      <div class="cal-event"><div class="cal-day">15/9</div><div class="cal-event-info"><strong>Reunión de padres 6° año</strong><span>18:00 hs — Orientación egreso</span></div></div>
-    </div>
-    <div class="cal-month">
-      <div class="cal-month-header"><h4>Noviembre / Diciembre</h4><span>Cierre de año</span></div>
-      <div class="cal-event"><div class="cal-day">10/11</div><div class="cal-event-info"><strong>Presentación proyectos 6° año</strong><span>Proyecto de Empresa — Aula Magna</span></div></div>
-      <div class="cal-event"><div class="cal-day important">28/11</div><div class="cal-event-info"><strong>Último día de clases</strong><span>Todos los años</span></div></div>
-      <div class="cal-event"><div class="cal-day important">2/12</div><div class="cal-event-info"><strong>Mesa exámenes diciembre</strong><span>Del 2 al 13 de diciembre</span></div></div>
-      <div class="cal-event"><div class="cal-day">19/12</div><div class="cal-event-info"><strong>Acto de egresados 6° año</strong><span>19:00 hs — SUM</span></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ─────────────────────────────
-     INSCRIPCIONES
-───────────────────────────── -->
-<div class="inst-section" id="inscripciones">
-  <div class="section-label">Trámites y requisitos</div>
-  <h2 class="section-title" style="margin-bottom:40px">Inscripciones</h2>
-  <div class="two-col reveal">
-    <div>
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-trigger">Ingreso a 1° año <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
-            <strong>Período de inscripción:</strong> octubre a noviembre de cada año.<br><br>
-            <strong>Requisitos:</strong><br>
-            • DNI del alumno (original y copia)<br>
-            • Certificado de egreso de 7° grado / 6° primaria<br>
-            • Libreta de calificaciones primaria<br>
-            • Constancia de CUIL<br>
-            • 2 fotos 4×4<br>
-            • Partida de nacimiento (original y copia)<br><br>
-            La inscripción se realiza presencialmente en Secretaría en el horario de atención.
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Renovación de matrícula <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
-            Los alumnos que continúan sus estudios deben realizar la renovación de matrícula en diciembre. El trámite se completa a través del portal Mi Escuela y con la presentación de la documentación actualizada en Secretaría.<br><br>
-            <strong>Documentación requerida:</strong> DNI vigente, constancia de CUIL actualizada y libreta con calificaciones firmada.
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Pase desde otra institución <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
-            Los alumnos que solicitan pase desde otra escuela deben presentar: certificado de alumno regular, boletín de calificaciones del año en curso, ficha de pase firmada por las autoridades de la escuela de origen y documentación personal completa. Sujeto a disponibilidad de vacantes.
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Horario de atención Secretaría <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">
-            Lunes a viernes de 00 a 00hs y de 00 a 00 hs.<br>
-            Turno noche: lunes, miércoles y viernes de 00 a 00 hs.<br>
-            Durante el período de inscripción se extiende el horario hasta las 00 hs de lunes a viernes.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="content-block">
-      <h3 style="font-family:'Playfair Display',serif;color:var(--g900);font-size:1.3rem;margin-bottom:14px">Vacantes disponibles</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Año</th><th>Turno</th><th>Vacantes</th><th>Estado</th></tr></thead>
-          <tbody>
-            <tr><td>1°</td><td>Mañana (7:30 hs)</td><td>35</td><td><span class="badge badge-green">Abiertas</span></td></tr>
-            <tr><td>1°</td><td>Tarde (13:00 hs)</td><td>35</td><td><span class="badge badge-gold">Casi completo</span></td></tr>
-            <tr><td>2° a 6°</td><td>Mañana / Tarde/ noche</td><td>—</td><td><span class="badge badge-soft">Solo pases</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:16px;font-size:0.82rem;color:var(--text-soft)">* Las vacantes se actualizan en tiempo real. Consultar en Secretaría para información definitiva.</p>
-      <div style="margin-top:24px">
-        <a href="#contacto" class="btn btn-primary">Consultar disponibilidad →</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ─────────────────────────────
-     EXÁMENES
-───────────────────────────── -->
-<div class="inst-section" id="examenes">
-  <div class="section-label">Mesas y fechas</div>
-  <h2 class="section-title" style="margin-bottom:40px">Exámenes y Evaluaciones</h2>
-  <div class="two-col reveal">
-    <div>
-      <div class="section-label" style="margin-bottom:12px">Mesas de examen 2025</div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Mesa</th><th>Período</th><th>Inscripción hasta</th></tr></thead>
-          <tbody>
-            <tr><td>Mesa de Diciembre 2024</td><td>2 — 13 dic 00</td><td>25 nov 00</td></tr>
-            <tr><td>Mesa de Febrero 2025</td><td>3 — 14 feb 00</td><td>24 ene 00</td></tr>
-            <tr><td>Mesa de Julio 2025</td><td>28 jul — 8 ago 00</td><td>11 jul 00</td></tr>
-            <tr><td>Mesa de Diciembre 2025</td><td>1 — 12 dic 00</td><td>24 nov 00</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div>
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-trigger">¿Cómo inscribirse a rendir? <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">La inscripción se realiza a través del portal Mi Escuela, en el módulo "Exámenes". Los alumnos deben seleccionar la mesa, las materias a rendir y confirmar la inscripción. Ante cualquier inconveniente, dirigirse a Secretaría dentro del plazo establecido.</div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Reglamento de evaluación <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">La escala de calificación es de 1 a 10. La nota mínima de aprobación es 7 (siete). Los alumnos con calificación de 4 a 6 quedan con la materia en condición de "previo" y deben rendir en mesa de examen. Calificación de 1 a 3: insuficiente, deben recursar.</div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Completar estudios <span class="accordion-icon">▾</span></button>
-          <div class="accordion-body">Los ex-alumnos que adeudan materias para completar sus estudios pueden inscribirse en las mesas regulares. Deben presentar su libreta original, DNI y completar el formulario de reinscripción disponible en Secretaría.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ─────────────────────────────
-     BIBLIOTECA
-───────────────────────────── -->
-<div class="inst-section" id="biblioteca">
-  <div class="section-label">Recursos académicos</div>
-  <h2 class="section-title" style="margin-bottom:40px">
-    <a href="https://sites.google.com/bue.edu.ar/biblio-et4-rep-del-libano" target="_blank" class="title-link">Biblioteca Escolar</a>
-  </h2>
-  <div class="two-col reveal">
-    <div class="content-block">
-      <p>La Biblioteca de la Escuela Técnica N°4 D.E. 5 "República del Líbano" cuenta con un acervo de más de 236 volúmenes especializados en administración, contabilidad, economía, derecho, marketing y áreas afines.</p>
-      <p>Impulsada originalmente por donaciones y normativas del Estado, en sus comienzos (1906) resguardaba los manuales técnicos y guías prácticas que las alumnas utilizaban en los talleres de la entonces Escuela Profesional N° 3. Con el cambio de nombre del establecimiento, fue bautizada como "Khalil Gibrán" en honor al célebre poeta y escritor libanés, cuyos valores humanistas inspiran hoy a nuestros estudiantes técnicos.</p>
-      <p>Además del material físico para alumnos, la biblioteca dispone de un catálogo con material pedagógico exclusivo para docentes. Ante el desafío de la pandemia en 2020, la comunidad educativa fundó también la "Biblioteca Digital de la ET N° 4" en el campus virtual oficial, un espacio que hoy en día complementa con éxito la bibliografía de las aulas presenciales.</p>
-      <div class="stat-row">
-        <div class="stat-box"><strong>230+</strong><span>Volúmenes</span></div>
-        <div class="stat-box"><strong>1+</strong><span>Recursos digitales</span></div>
-      </div>
-    </div>
-    <div>
-      <div class="highlight-box">
-        <h3>Servicios disponibles</h3>
-        <ul>
-          <li>Préstamo en sala y domiciliario de libros y materiales.</li>
-          <li>Acceso a la Biblioteca Digital en el campus virtual oficial.</li>
-          <li>Material de estudio para alumnos y recursos pedagógicos para docentes.</li>
-          <li>Asesoramiento en búsqueda y gestión de información.</li>
-        </ul>
-      </div>
-      <div style="margin-top:18px;background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:18px 20px">
-        <div style="font-size:0.78rem;font-weight:700;color:var(--g700);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Horario de atención</div>
-        <div style="font-size:0.88rem;color:var(--text-mid);line-height:1.8">
-          Lunes a viernes: 08:30 hs a 17:00 hs<br>
         
+        <div class="form-group-login">
+          <label style="color: var(--text-dark); font-weight:700;">Cargo / Rol *</label>
+          <input type="text" id="authCargo" required placeholder="Ej: Rectora / Vicerrector">
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ─────────────────────────────
-     ACOMPAÑAMIENTO
-───────────────────────────── -->
-<div class="inst-section" id="acompanamiento">
-  <div class="section-label">Apoyo pedagógico</div>
-  <h2 class="section-title" style="margin-bottom:40px">Programa de Acompañamiento Estudiantil</h2>
-  <div class="two-col reveal">
-    <div>
-      <div class="highlight-box">
-        <h3>¿Qué es el programa?</h3>
-        <p>Es un conjunto de acciones orientadas a sostener las trayectorias escolares de todos los alumnos, con especial atención a quienes enfrentan dificultades académicas o personales.</p>
-        <ul>
-          <li>Tutorías individuales con docentes de cada materia</li>
-          <li>Talleres de técnicas de estudio y organización</li>
-          <li>Orientación vocacional para 0° y 0° año</li>
-          <li>Acompañamiento socioemocional con equipo de orientación</li>
-          <li>Programa de tutores pares (alumnos de años superiores)</li>
-          <li>Articulación con familias y entorno</li>
-        </ul>
-      </div>
-    </div>
-    <div class="content-block">
-      <h3 style="font-family:'Playfair Display',serif;color:var(--g900);font-size:1.2rem;margin-bottom:14px">Equipo de Orientación Escolar</h3>
-      <p>El Equipo de Orientación Escolar (EOE) está integrado por orientadores educacionales, orientadores del aprendizaje y trabajadores sociales. Su trabajo es confidencial y orientado al bienestar integral del alumno.</p>
-      <p>El EOE interviene en situaciones de dificultad de aprendizaje, conflictos de convivencia, problemas de asistencia o situaciones de vulnerabilidad social.</p>
-      <p>Para solicitar una entrevista, los alumnos o sus familias pueden acercarse directamente a la oficina del EOE (planta alta, al lado de Secretaría) o dejar su nombre y curso en la guardia.</p>
-      <div style="margin-top:20px;background:var(--g100);border-left:4px solid var(--g500);border-radius:var(--radius-sm);padding:16px 20px">
-        <div style="font-size:0.8rem;font-weight:700;color:var(--g700);margin-bottom:4px">Horario de atención EOE</div>
-        <div style="font-size:0.85rem;color:var(--text-mid)">Lunes a viernes de 00 a 00 hs<br>Consultas urgentes: guardía escolar</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ─────────────────────────────
-     REGLAMENTO
-───────────────────────────── -->
-<div class="inst-section" id="reglamento">
-  <div class="section-label">Normas de convivencia</div>
-  <div class="reveal">
-    <div class="accordion">
-      <div class="accordion-item">
-        <button class="accordion-trigger"> Uniforme e indumentaria <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">Se exige el uso del uniforme institucional (chomba blanca con logo y pantalón de vestir azul o negro) en todas las actividades escolares. En días de educación física, se permite el uso de ropa deportiva. Las prendas deportivas no pueden usarse en materias teóricas.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Uso del celular y dispositivos <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">El uso del celular está permitido únicamente cuando el docente lo autoriza con fines pedagógicos. Durante las evaluaciones, el celular debe estar guardado y en silencio. El uso indebido durante una evaluación se considera conducta deshonesta y puede implicar la anulación de la misma.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Asistencia y puntualidad <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">La asistencia mínima obligatoria es del 75% por materia para mantener la regularidad. Los ingresos tardíos acumulan media falta. Las inasistencias reiteradas sin justificación pueden derivar en la pérdida de la regularidad y la necesidad de recursar. Las ausencias a exámenes deben ser justificadas dentro de las 72 horas.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Convivencia y respeto <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">La institución adhiere a los principios del Acuerdo de Convivencia Escolar. Se prohíbe toda forma de discriminación, hostigamiento o violencia física y verbal entre miembros de la comunidad educativa. Las situaciones de conflicto se tratan a través del Consejo de Convivencia con participación de alumnos, docentes y familias.</div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger">Uso de instalaciones <span class="accordion-icon">▾</span></button>
-        <div class="accordion-body">Las aulas, laboratorios, biblioteca y demás espacios son de uso común y deben mantenerse en buen estado. El deterioro intencional de la infraestructura implica responsabilidad del alumno y sus familias. El uso del laboratorio de informática está regulado por el reglamento específico disponible en la portería.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ─────────────────────────────
-     CONTACTO
-───────────────────────────── -->
-<div class="inst-section" id="contacto">
-  <div class="section-label">Comunicación institucional</div>
-  <h2 class="section-title" style="margin-bottom:40px">Contacto</h2>
-  <div class="two-col reveal">
-    <div>
-      <div class="contact-grid">
-        <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Dirección</h4><p>Av. Montes de Oca 121, CABA<br>C1043AAZ — Buenos Aires, Argentina</p></div></div>
-        <div class="contact-item"><div class="contact-icon">📞</div><div><h4>Teléfono</h4><p> 11 4307-6051<br>Lunes a viernes 8:00 — 20:00 hs</p></div></div>
-        <div class="contact-item"><div class="contact-icon">🎓</div><div><h4>Email Académico</h4><p>det_4_de5@bue.edu.ar</p></div></div>
         
-      </div>
+        <div class="form-group-login">
+          <label style="color: var(--text-dark); font-weight:700;">Emoji Avatar</label>
+          <input type="text" id="authAvatar" maxlength="4" placeholder="Ej: 👩‍💼">
+        </div>
+        
+        <div class="form-actions" style="margin-top: 10px; display:flex; justify-content:space-between; gap: 10px;">
+          <button type="button" id="authDeleteBtn" class="btn btn-outline" style="border-color:#eb5757; color:#eb5757; display:none;">🗑️ Eliminar</button>
+          <div style="display:flex; gap:10px; margin-left:auto;">
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('authEditOverlay').classList.remove('open')">Cancelar</button>
+            <button type="submit" class="btn btn-primary">✓ Guardar</button>
+          </div>
+        </div>
+      </form>
     </div>
-    <div>
-      <div style="background:var(--g100);border-radius:var(--radius-lg);padding:32px">
-        <div class="section-label" style="margin-bottom:12px">Envianos un mensaje</div>
-        <div class="form-group" style="margin-bottom:14px"><label>Tu nombre</label><input type="text" placeholder="Nombre y apellido"></div>
-        <div class="form-group" style="margin-bottom:14px"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
-        <div class="form-group" style="margin-bottom:14px">
-          <label>Área de consulta</label>
-          <select>
-            <option>Inscripciones</option>
-            <option>Orientación escolar</option>
-            <option>Otro</option>
+  </div>
+
+  <!-- MODAL EDITAR FECHA CALENDARIO (CLIENT-SIDE) -->
+  <div class="modal-overlay" id="calEditOverlay">
+    <div class="modal" style="max-width: 500px;">
+      <button class="modal-close" onclick="document.getElementById('calEditOverlay').classList.remove('open')">✕</button>
+      <h2 id="calModalTitle" style="font-family:'Playfair Display',serif; margin-bottom: 24px; color: var(--g900)">Editar Fecha del Calendario</h2>
+      <form id="calEditForm" style="display: flex; flex-direction: column; gap: 16px;">
+        <input type="hidden" id="calId">
+        
+        <div class="form-group-login">
+          <label style="color: var(--text-dark); font-weight:700;">Grupo Mensual / Encabezado *</label>
+          <select id="calMonth" required style="width:100%; padding:12px; border:1px solid var(--g200); border-radius:var(--radius-sm); background:var(--g50);">
+            <option value="Febrero / Marzo">Febrero / Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo / Junio">Mayo / Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto / Septiembre">Agosto / Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre / Diciembre">Noviembre / Diciembre</option>
           </select>
         </div>
-        <div class="form-group" style="margin-bottom:20px"><label>Mensaje</label><textarea placeholder="Escribí tu consulta..." style="min-height:90px"></textarea></div>
-        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="showToast('✅ Mensaje enviado correctamente')">Enviar mensaje →</button>
-      </div>
+        
+        <div class="form-group-login">
+          <label style="color: var(--text-dark); font-weight:700;">Día / Rango *</label>
+          <input type="text" id="calDay" required placeholder="Ej: 17/2 o 3/3 a 12/3">
+        </div>
+        
+        <div class="form-group-login">
+          <label style="color: var(--text-dark); font-weight:700;">Título del Evento *</label>
+          <input type="text" id="calTitle" required placeholder="Ej: Inicio del Ciclo Lectivo">
+        </div>
+        
+        <div class="form-group-login">
+          <label style="color: var(--text-dark); font-weight:700;">Descripción Corta</label>
+          <input type="text" id="calDesc" placeholder="Ej: Todos los turnos / Feriado nacional">
+        </div>
+        
+        <div class="form-group-login" style="display:flex; gap:10px; align-items:center;">
+          <input type="checkbox" id="calImportant" style="width:auto; margin:0;">
+          <label for="calImportant" style="color: var(--text-dark); font-weight:700; text-transform:none; margin:0; cursor:pointer;">Marcar como Fecha Relevante (Resaltado en verde)</label>
+        </div>
+        
+        <div class="form-actions" style="margin-top: 10px; display:flex; justify-content:space-between; gap: 10px;">
+          <button type="button" id="calDeleteBtn" class="btn btn-outline" style="border-color:#eb5757; color:#eb5757; display:none;">🗑️ Eliminar</button>
+          <div style="display:flex; gap:10px; margin-left:auto;">
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('calEditOverlay').classList.remove('open')">Cancelar</button>
+            <button type="submit" class="btn btn-primary">✓ Guardar</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo">
-        <div class="logo-icon">EC</div>
-        <div class="logo-text"><strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong><span>Gestion y Administración de las Organizaciones</span></div>
-      </div>
-      <p class="footer-desc">Formando Tecnicos en Gestion y Administración de las organizaciones profesionales desde 1965.</p>
-      <div class="footer-social">
-        <a href="#">FB</a><a href="#">IG</a><a href="#">TW</a><a href="#">YT</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Institución</h4>
-      <a href="#historia">Historia</a>
-      <a href="#autoridades">Autoridades</a>
-      <a href="#proyecto">Proyecto educativo</a>
-      <a href="#reglamento">Normas de Convivencia</a>
-    </div>
-    <div class="footer-col">
-      <h4>Académico</h4>
-      <a href="#especialidad">Especialidad</a>
-      <a href="#calendario">Calendario</a>
-      <a href="#inscripciones">Inscripciones</a>
-      <a href="#examenes">Exámenes</a>
-    </div>
-    <div class="footer-col">
-      <h4>Servicios</h4>
-      <a href="#biblioteca">Biblioteca</a>
-      <a href="#acompanamiento">Acompañamiento</a>
-      <a href="#contacto">Contacto</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2025 Escuela Técnica N°4 D.E. 5 "República del Líbano" — Todos los derechos reservados</span>
-    
-  </div>
-</footer>
+  <!-- Scripts funcionales -->
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="layout.js"></script>
+  <script src="main.js"></script>
 
-<div class="toast" id="toast"></div>
-<button id="scrollTop" aria-label="Volver arriba">↑</button>
+  <script>
+    // Lógica asíncrona de renderizado y edición client-side
+    async function renderAuthorities() {
+      try {
+        const list = await window.db.getAuthorities();
+        const grid = document.getElementById('authoritiesGrid');
+        if (!grid) return;
+        const loggedIn = await window.db.isLoggedIn();
 
-<script src="main.js"></script>
-<script>
-// Active nav highlight on scroll
-const sections = document.querySelectorAll('[id]');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
-});
-// Smooth hash scroll on load
-if (window.location.hash) {
-  setTimeout(() => {
-    const el = document.querySelector(window.location.hash);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, 300);
-}
-</script>
+        if (loggedIn) {
+          document.getElementById('adminControlsAuth').style.display = 'flex';
+        }
+        
+        if (!list.length) {
+          grid.innerHTML = '<p>No hay directivos cargados en la lista.</p>';
+          return;
+        }
+
+        grid.innerHTML = list.map(a => {
+          const aData = JSON.stringify(a).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+          return `
+            <div class="autoridad-card" id="authCard_${a.id}">
+              ${loggedIn ? `<button class="edit-btn-inline" title="Editar directivo" onclick='openEditAuthorityModal(${aData})'>✏️</button>` : ''}
+              <div class="autoridad-avatar">${a.avatar || '👤'}</div>
+              <h4>${a.name}</h4>
+              <div class="cargo">${a.cargo}</div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error("Error al cargar autoridades", err);
+      }
+    }
+
+    async function renderCalendar() {
+      try {
+        const list = await window.db.getCalendar();
+        const grid = document.getElementById('calendarGrid');
+        if (!grid) return;
+        const loggedIn = await window.db.isLoggedIn();
+
+        if (loggedIn) {
+          document.getElementById('adminControlsCal').style.display = 'flex';
+        }
+        
+        if (!list.length) {
+          grid.innerHTML = '<p>No hay eventos registrados en el calendario.</p>';
+          return;
+        }
+
+        // Agrupar eventos por mes respetando el orden lógico
+        const grouped = {};
+        list.forEach(e => {
+          if (!grouped[e.month_group]) grouped[e.month_group] = [];
+          grouped[e.month_group].push(e);
+        });
+
+        grid.innerHTML = Object.keys(grouped).map(month => {
+          const eventsHtml = grouped[month].map(e => {
+            const eData = JSON.stringify(e).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+            return `
+              <div class="cal-event" id="calEvent_${e.id}">
+                <div class="cal-day ${e.important ? 'important' : ''}">
+                  ${e.day}
+                </div>
+                <div class="cal-event-info">
+                  <strong>${e.title}</strong>
+                  ${e.desc ? `<span>${e.desc}</span>` : ''}
+                </div>
+                ${loggedIn ? `<button class="edit-btn-inline" title="Editar fecha" onclick='openEditCalendarModal(${eData})' style="top:14px; right:14px;">✏️</button>` : ''}
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div class="cal-month">
+              <div class="cal-month-header">
+                <h4>${month}</h4>
+                <span>Ciclo Lectivo</span>
+              </div>
+              ${eventsHtml}
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error("Error al cargar calendario", err);
+      }
+    }
+
+    // Modal Edit Helpers para directivos
+    function openEditAuthorityModal(auth) {
+      if (auth) {
+        document.getElementById('authId').value = auth.id;
+        document.getElementById('authName').value = auth.name;
+        document.getElementById('authCargo').value = auth.cargo;
+        document.getElementById('authAvatar').value = auth.avatar || '👩‍💼';
+        document.getElementById('authModalTitle').textContent = 'Editar Directivo';
+        document.getElementById('authDeleteBtn').style.display = 'inline-block';
+      } else {
+        document.getElementById('authId').value = '';
+        document.getElementById('authName').value = '';
+        document.getElementById('authCargo').value = '';
+        document.getElementById('authAvatar').value = '👩‍💼';
+        document.getElementById('authModalTitle').textContent = 'Agregar Directivo';
+        document.getElementById('authDeleteBtn').style.display = 'none';
+      }
+      document.getElementById('authEditOverlay').classList.add('open');
+    }
+
+    // Modal Edit Helpers para calendario
+    function openEditCalendarModal(ev) {
+      if (ev) {
+        document.getElementById('calId').value = ev.id;
+        document.getElementById('calMonth').value = ev.month_group;
+        document.getElementById('calDay').value = ev.day;
+        document.getElementById('calTitle').value = ev.title;
+        document.getElementById('calDesc').value = ev.desc || '';
+        document.getElementById('calImportant').checked = ev.important;
+        document.getElementById('calModalTitle').textContent = 'Editar Fecha del Calendario';
+        document.getElementById('calDeleteBtn').style.display = 'inline-block';
+      } else {
+        document.getElementById('calId').value = '';
+        document.getElementById('calMonth').selectedIndex = 0;
+        document.getElementById('calDay').value = '';
+        document.getElementById('calTitle').value = '';
+        document.getElementById('calDesc').value = '';
+        document.getElementById('calImportant').checked = false;
+        document.getElementById('calModalTitle').textContent = 'Agregar Fecha al Calendario';
+        document.getElementById('calDeleteBtn').style.display = 'none';
+      }
+      document.getElementById('calEditOverlay').classList.add('open');
+    }
+
+    // Procesar envío de formulario de directivos
+    document.getElementById('authEditForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('authId').value;
+      const item = {
+        name: document.getElementById('authName').value.trim(),
+        cargo: document.getElementById('authCargo').value.trim(),
+        avatar: document.getElementById('authAvatar').value.trim() || '👤'
+      };
+      if (id) item.id = parseInt(id);
+
+      try {
+        await window.db.saveAuthority(item);
+        showToast('✅ Directivo guardado con éxito.');
+        document.getElementById('authEditOverlay').classList.remove('open');
+        renderAuthorities();
+      } catch (err) {
+        showToast('❌ Error al guardar directivo.');
+      }
+    });
+
+    // Borrar directivo
+    document.getElementById('authDeleteBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('authId').value);
+      if (confirm('¿Estás seguro de que deseas eliminar este directivo de la nómina?')) {
+        try {
+          await window.db.deleteAuthority(id);
+          showToast('✅ Directivo eliminado.');
+          document.getElementById('authEditOverlay').classList.remove('open');
+          renderAuthorities();
+        } catch (err) {
+          showToast('❌ Error al eliminar directivo.');
+        }
+      }
+    });
+
+    // Procesar envío de formulario de calendario
+    document.getElementById('calEditForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('calId').value;
+      const item = {
+        month_group: document.getElementById('calMonth').value,
+        day: document.getElementById('calDay').value.trim(),
+        title: document.getElementById('calTitle').value.trim(),
+        desc: document.getElementById('calDesc').value.trim(),
+        important: document.getElementById('calImportant').checked
+      };
+      if (id) item.id = parseInt(id);
+
+      try {
+        await window.db.saveCalendar(item);
+        showToast('✅ Evento escolar guardado con éxito.');
+        document.getElementById('calEditOverlay').classList.remove('open');
+        renderCalendar();
+      } catch (err) {
+        showToast('❌ Error al guardar fecha.');
+      }
+    });
+
+    // Borrar fecha del calendario
+    document.getElementById('calDeleteBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('calId').value);
+      if (confirm('¿Estás seguro de que deseas eliminar este evento del calendario?')) {
+        try {
+          await window.db.deleteCalendar(id);
+          showToast('✅ Evento eliminado del calendario.');
+          document.getElementById('calEditOverlay').classList.remove('open');
+          renderCalendar();
+        } catch (err) {
+          showToast('❌ Error al eliminar fecha.');
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        renderAuthorities();
+        renderCalendar();
+      }, 100);
+    });
+
+    // Control dinámico de navegación activa al hacer scroll
+    const sections = document.querySelectorAll('.inst-section');
+    const navLinks = document.querySelectorAll('.inst-nav a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 140) {
+          current = s.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
