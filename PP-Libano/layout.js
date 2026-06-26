@@ -29,16 +29,17 @@ function injectTopbar(loggedIn) {
       </div>
       <div class="topbar-right">
         ${loggedIn
-      ? `
+          ? `
             <span class="admin-topbar-tag">🛠️ Modo Admin</span>
             <a href="logs.html" class="topbar-link-admin">Historial</a>
             <a href="#" id="btnLogoutAction" class="topbar-link-logout">Cerrar Sesión</a>
           `
-      : `<a href="login.html">Ingresar al Portal</a>`
-    }
+          : ``
+        }
       </div>
     </div>
   `;
+}
 
   // Evento de cierre de sesión
   const btnLogout = document.getElementById('btnLogoutAction');
@@ -54,7 +55,7 @@ function injectTopbar(loggedIn) {
       }
     });
   }
-}
+
 
 
 /* ── HEADER Y NAVEGACIÓN ── */
