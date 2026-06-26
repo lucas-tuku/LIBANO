@@ -43,6 +43,41 @@
       </div>
     </div>
   </main>
+ <section class="school-action">
+    <div class="action-container">
+      <h2 class="section-title">Nuestra Escuela por Dentro</h2>
+      <p class="section-subtitle">Descubre cómo aprenden nuestros estudiantes y conoce los diferentes espacios donde se desarrollan las clases.</p>
+      
+      <div class="action-grid">
+        
+        <div class="action-card" data-carousel>
+          <div class="action-card-img">
+            <img src="./img/alumnos en la clase de idiomas.jpeg" alt="Clase de Idioma" class="active">
+            <img src="./img/Imagen de los alumnos de teatro.jpeg" alt="Clase de Teatro">
+            <img src="./img/Alumnos sociales 2.jpeg" alt="Clase de Ciencias Sociales">
+          </div>
+          <div class="action-card-content">
+            <h3>Alumnos en Acción</h3>
+            <p>Nuestros estudiantes participando activamente en los talleres y clases de Idioma, Teatro y Ciencias Sociales.</p>
+          </div>
+        </div>
+
+        <div class="action-card" data-carousel>
+          <div class="action-card-img">
+            <img src="./img/Aula de Naturales.jpeg" alt="Aula de Ciencias Naturales" class="active">
+            <img src="./img/Aula Dibujo.jpeg" alt="Aula de Dibujo Técnico">
+             <img src="./img/Aula dibujo 3.jpeg" alt="Aula de Dibujo Técnico">
+            <img src="./img/Teatro 1.jpeg" alt="Espacio de Teatro">
+          </div>
+          <div class="action-card-content">
+            <h3>Nuestros Espacios de Trabajo</h3>
+            <p>Un recorrido visual por las aulas de Ciencias Naturales, Dibujo Técnico y los escenarios dedicados al arte y la expresión.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- NOVEDADES RECIENTES -->
   <section style="background:var(--white)" id="recentNews">
@@ -167,6 +202,26 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(renderHomeNews, 100);
+    });
+  </script>
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const carousels = document.querySelectorAll("[data-carousel]");
+      
+      carousels.forEach(carousel => {
+        const images = carousel.querySelectorAll(".action-card-img img");
+        if (images.length <= 1) return;
+        
+        let currentIndex = 0;
+        
+        setInterval(() => {
+          images[currentIndex].classList.remove("active");
+          
+          currentIndex = (currentIndex + 1) % images.length;
+          
+          images[currentIndex].classList.add("active");
+        }, 4000); 
+      });
     });
   </script>
 </body>

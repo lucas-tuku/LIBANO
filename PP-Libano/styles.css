@@ -1210,4 +1210,118 @@ footer {
 
   /* Hero stats: full width cards */
   .stat-card { flex: 1 1 100%; }
+}  /* ==========================================================================
+   SECCIÓN: GALERÍA DE LA ESCUELA (DOS BLOQUES ROTATIVOS)
+   ========================================================================== */
+.school-action {
+  padding: 80px 24px;
+  background-color: var(--g50);
+}
+
+.action-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.school-action .section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: var(--g800);
+  margin-bottom: 12px;
+}
+
+.school-action .section-subtitle {
+  color: var(--text-mid);
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 48px auto;
+  line-height: 1.6;
+}
+
+/* Distribución en 2 columnas en PC */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 40px;
+}
+
+/* Modificación para pantallas chicas (celulares) para que no se rompa */
+@media (max-width: 600px) {
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.action-card {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.action-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(10, 46, 26, 0.12);
+}
+
+.action-card-img {
+  position: relative;
+  width: 100%;
+  height: 320px; /* Un poco más alto para resaltar mejor los detalles de las aulas */
+  overflow: hidden;
+  background-color: #e6faf0;
+}
+
+.action-card-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Transición suave desvanecida */
+  z-index: 1;
+}
+
+.action-card-img img.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.action-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-card-content h3 {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--g900);
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.action-card-content p {
+  color: var(--text-mid);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 50px; /* Ajusta según el tamaño de tu imagen */
+    width: auto;
+    object-fit: contain;
 }

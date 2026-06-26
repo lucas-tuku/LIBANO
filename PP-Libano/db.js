@@ -176,39 +176,50 @@ class DatabaseManager {
   // ==========================================
   async login(username, password) {
     await this.initPromise;
+
+    // Intentar primero Supabase
     if (this.mode === 'supabase') {
       try {
         const { data, error } = await this.supabase.auth.signInWithPassword({
           email: username,
           password: password
         });
+
         if (error) throw error;
-        await this.addLog('INICIO_SESION', `Inicio de sesión administrativo exitoso: ${username}`);
+
+        // Guardar también un indicador local
+        localStorage.setItem("sesion_activa", "true");
+        localStorage.setItem("user_name", data.user.email);
+
+        await this.addLog(
+        "INICIO_SESION",
+        `Inicio de sesión: ${data.user.email}`
+        );
+
         return data.user;
+
       } catch (err) {
-        console.warn("⚠️ Error en login Supabase. Intentando login local como fallback...", err);
-        // Si el usuario intentó con credenciales locales de admin, permitirle pasar localmente
-        if (username.toLowerCase() === 'admin' && password === 'admin123') {
-          this.mode = 'local'; // Forzar modo local
-          localStorage.setItem('sesion_activa', 'true');
-          localStorage.setItem('user_name', 'admin');
-          await this.addLog('INICIO_SESION', 'Inicio de sesión administrativo exitoso (Local Fallback).');
-          return { email: 'admin@escuela.edu.ar', role: 'admin' };
-        }
-        throw new Error(err.message || 'Credenciales inválidas.');
-      }
-    } else {
-      // LocalStorage Auth (admin / admin123)
-      if (username.toLowerCase() === 'admin' && password === 'admin123') {
-        localStorage.setItem('sesion_activa', 'true');
-        localStorage.setItem('user_name', 'admin');
-        await this.addLog('INICIO_SESION', 'Inicio de sesión administrativo exitoso.');
-        return { email: 'admin@escuela.edu.ar', role: 'admin' };
-      } else {
-        await this.addLog('LOGIN_FALLIDO', `Intento fallido de acceso para el usuario: ${username}`);
-        throw new Error('Credenciales inválidas.');
+      console.warn("Login Supabase falló. Intentando modo local...");
       }
     }
+
+    // Fallback local
+    if (username.toLowerCase() === "admin" && password === "admin123") {
+
+      localStorage.setItem("sesion_activa", "true");
+      localStorage.setItem("user_name", "admin");
+
+      await this.addLog(
+        "INICIO_SESION",
+        "Inicio de sesión administrador (modo local)."
+      );
+
+      return {
+        email: "admin@escuela.edu.ar",
+        role: "admin"
+      };
+    }
+      throw new Error("Credenciales inválidas.");
   }
 
   async logout() {
@@ -230,17 +241,24 @@ class DatabaseManager {
 
   async isLoggedIn() {
     await this.initPromise;
-    if (this.mode === 'supabase') {
-      try {
-        const { data: { session } } = await this.supabase.auth.getSession();
-        return session !== null;
-      } catch (err) {
-        console.warn("Error leyendo sesión de Supabase, recurriendo a local", err);
-        return localStorage.getItem('sesion_activa') === 'true';
-      }
-    } else {
-      return localStorage.getItem('sesion_activa') === 'true';
+
+    // Si existe sesión local, devolver true
+    if (localStorage.getItem("sesion_activa") === "true") {
+      return true;
     }
+
+    if (this.mode === "supabase") {
+      try {
+        const { data: { session } } =
+        await this.supabase.auth.getSession();
+
+        return session !== null;
+      } catch {
+      return false;
+      }
+    }
+
+    return false;
   }
 
   async getUserEmail() {
