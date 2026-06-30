@@ -120,7 +120,7 @@ function injectFooter() {
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="logo">
-            <div class="logo-icon">EC</div>
+          <img src="img/logo.png" alt="Logo Escuela" style="height: 50px; width: auto; margin-right: 10px;">
             <div class="logo-text">
               <strong>Escuela Técnica N°4 D.E. 5 "República del Líbano"</strong>
               <span>Gestión y Administración de las Organizaciones</span>
